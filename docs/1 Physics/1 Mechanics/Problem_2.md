@@ -88,5 +88,5 @@ This investigation explored the forced damped pendulum’s behavior under differ
 
 **Figure 1: Simulated Angular Displacement Over Time**
 
-![Pendulum Motion](/Users/elvintahmaz/Downloads/Graph2.png)
+![Graphical Representation: Pendulum Motion](/Users/elvintahmaz/Downloads/Graph2.png)
 

@@ -74,16 +74,6 @@ plt.legend()
 plt.grid()
 plt.show()
 ```
-
-## Practical Applications
-The forced damped pendulum model applies to various real-world scenarios:
-- **Energy Harvesting**: Used in systems that convert mechanical energy into electrical energy through vibrations.
-- **Suspension Bridges**: Helps analyze resonance effects in structures to prevent catastrophic failures (e.g., Tacoma Narrows Bridge collapse).
-- **Oscillating Circuits**: Analogous to driven RLC circuits where voltage behaves like the pendulum’s motion.
-
-## Conclusion
-This investigation explored the forced damped pendulum’s behavior under different conditions. Numerical simulations demonstrated transitions between periodic and chaotic motion, highlighting key aspects of resonance and damping effects. Further studies could introduce nonlinear damping and non-periodic forcing to expand the analysis of complex dynamical systems.
-
 ---
 
 **Figure 1: Simulated Angular Displacement Over Time**

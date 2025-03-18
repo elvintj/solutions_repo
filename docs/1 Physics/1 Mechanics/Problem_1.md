@@ -65,17 +65,7 @@ plt.grid()
 plt.show()
 ```
 
-## Practical Applications
-Understanding projectile motion has applications in various fields, such as:
-- **Sports**: Calculating the optimal angle for maximum distance in activities like soccer and javelin throwing.
-- **Engineering**: Designing ballistic trajectories in defense and space exploration.
-- **Gaming and Animation**: Simulating realistic physics for virtual environments.
-
-## Conclusion
-This investigation demonstrated how the range of a projectile depends on the launch angle. The theoretical and computational analyses confirm that the optimal launch angle for maximum range is \( 45^\circ \). More realistic models could incorporate air resistance and non-uniform gravitational fields to refine these results.
-
----
 
 **Figure 1: Sample Trajectories of Projectile Motion**
 
-![Graphical Representation](/Users/elvintahmaz/Downloads/Graph1.png)
+![Graphical Representation: Projectile Motion](/Users/elvintahmaz/Downloads/Graph1.png)

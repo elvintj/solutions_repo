@@ -61,17 +61,6 @@ plt.grid()
 plt.show()
 ```
 
-### Real-World Applications
-Kepler’s Third Law has significant implications in astronomy and engineering:
-- **Determining planetary masses and distances**: Astronomers use this law to estimate the mass of celestial bodies by observing their orbiting objects.
-- **Satellite navigation**: It aids in the calculation of satellite orbits around Earth, crucial for GPS technology.
-- **Exoplanet discovery**: Scientists use variations in orbital periods to detect exoplanets around distant stars.
-
-### Conclusion
-This analysis confirms the proportionality between \( T^2 \) and \( r^3 \) for circular orbits, validating Kepler’s Third Law. The computational model successfully demonstrates the theoretical prediction. Future extensions could include elliptical orbits, perturbations due to multiple bodies, or relativistic effects for high-gravity environments.
-
----
-
 **Figure 1: Graphical verification of Kepler's Third Law**
 
 ![Kepler's Third Law](/Users/elvintahmaz/Downloads/Graph3.jpg)

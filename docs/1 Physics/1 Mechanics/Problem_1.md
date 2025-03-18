@@ -66,6 +66,6 @@ plt.show()
 ```
 
 
-**Figure 1: Sample Trajectories of Projectile Motion**
+**Sample Trajectories of Projectile Motion**
 
 ![Graphical Representation: Projectile Motion](/Users/elvintahmaz/Downloads/Graph01.png)

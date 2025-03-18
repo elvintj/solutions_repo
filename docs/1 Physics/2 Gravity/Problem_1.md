@@ -63,4 +63,4 @@ plt.show()
 
 **Graphical verification of Kepler's Third Law**
 
-![Kepler's Third Law](/Users/elvintahmaz/Downloads/Graph3.jpg)
+![Kepler's Third Law](./_pics//Graph3.jpg)

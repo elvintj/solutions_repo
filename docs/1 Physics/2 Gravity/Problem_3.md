@@ -122,4 +122,4 @@ plt.show()
 
 **Graphical representation of orbital and escape velocities for Earth, Mars, and Jupiter**
 
-![orbital trajectories, escape velocities, and payload trajectories near Earth.](/Users/elvintahmaz/Downloads/Graph5.png, /Users/elvintahmaz/Downloads/Graph6.png)
+![Orbital and Escape Velocities](./_pics/Graph5.png)

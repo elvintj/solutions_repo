@@ -118,3 +118,8 @@ plt.legend()
 plt.grid(True)
 plt.axis('equal')
 plt.show()
+```
+
+**Graphical representation of orbital and escape velocities for Earth, Mars, and Jupiter**
+
+![orbital trajectories, escape velocities, and payload trajectories near Earth.](/Users/elvintahmaz/Downloads/Graph5, /Users/elvintahmaz/Downloads/Graph6)

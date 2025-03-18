@@ -78,4 +78,4 @@ This investigation demonstrated how the range of a projectile depends on the lau
 
 **Figure 1: Sample Trajectories of Projectile Motion**
 
-![Projectile Motion](projectile_motion.png)
+![Projectile Motion](https://www.geogebra.org/resource/w3qcceej/T4kd5hSUdjIi2PJq/material-w3qcceej.png)

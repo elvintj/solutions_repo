@@ -172,6 +172,27 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<p>import numpy as np
+import matplotlib.pyplot as plt</p>
+<p>def compute_range(v0, g, angles):
+    """Computes the range of a projectile for different angles."""
+    ranges = (v0**2 * np.sin(2 * np.radians(angles))) / g
+    return ranges</p>
+<h1 id="parameters">Parameters</h1>
+<p>v0 = 20  # Initial velocity (m/s)
+g = 9.81  # Acceleration due to gravity (m/s^2)
+angles = np.linspace(0, 90, 100)  # Angle range from 0 to 90 degrees</p>
+<h1 id="compute-ranges">Compute ranges</h1>
+<p>ranges = compute_range(v0, g, angles)</p>
+<h1 id="plot-results">Plot results</h1>
+<p>plt.figure(figsize=(8, 5))
+plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+plt.xlabel("Launch Angle (degrees)")
+plt.ylabel("Range (m)")
+plt.title("Projectile Range vs Launch Angle")
+plt.legend()
+plt.grid()
+plt.show()</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

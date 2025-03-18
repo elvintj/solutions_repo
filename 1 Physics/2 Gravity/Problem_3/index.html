@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Problem 3 - Physics and Mathematics</title>
+<title>Problem 3: Trajectories of a Freely Released Payload Near Earth - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Problem 3";
+        var mkdocs_page_name = "Problem 3: Trajectories of a Freely Released Payload Near Earth";
         var mkdocs_page_input_path = "1 Physics/2 Gravity/Problem_3.md";
         var mkdocs_page_url = null;
       </script>
@@ -58,8 +58,24 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
 </li>
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 3</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 3: Trajectories of a Freely Released Payload Near Earth</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation:</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#task">Task:</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#theory">Theory:</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#gravitational-principles">Gravitational Principles:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#trajectory-types">Trajectory Types:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#escape-velocity">Escape Velocity:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-code-numerical-simulation">Python Code: Numerical Simulation</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -163,7 +179,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">2 Gravity</li>
-<li class="breadcrumb-item active">Problem 3</li>
+<li class="breadcrumb-item active">Problem 3: Trajectories of a Freely Released Payload Near Earth</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -171,7 +187,122 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-3">Problem 3</h1>
+<h1 id="problem-3-trajectories-of-a-freely-released-payload-near-earth">Problem 3: Trajectories of a Freely Released Payload Near Earth</h1>
+<h2 id="motivation">Motivation:</h2>
+<p>When an object is released from a moving rocket near Earth, its trajectory is determined by its initial conditions (position, velocity, and altitude) and the gravitational forces acting on it. The study of these trajectories is crucial for various space mission scenarios such as deploying payloads, orbital insertion, reentry, and escape.</p>
+<h2 id="task">Task:</h2>
+<ol>
+<li><strong>Analyze Possible Trajectories:</strong></li>
+<li>Investigate the potential types of trajectories, including parabolic, hyperbolic, and elliptical orbits, based on the initial conditions of the payload (position, velocity, altitude).</li>
+<li>
+<p>Understand how these trajectories relate to real-world space scenarios such as orbital insertion, reentry, or escape from Earth's gravity.</p>
+</li>
+<li>
+<p><strong>Numerical Analysis:</strong></p>
+</li>
+<li>Use numerical methods to compute and simulate the path of the payload.</li>
+<li>
+<p>Account for Earth's gravitational force on the payload, and determine how the velocity and position evolve over time.</p>
+</li>
+<li>
+<p><strong>Simulation and Visualization:</strong></p>
+</li>
+<li>Develop a Python-based computational tool to simulate and visualize the motion of the payload under the influence of Earth's gravity.</li>
+<li>
+<p>The tool should take initial velocity, position, and direction as input and simulate the payload's trajectory.</p>
+</li>
+<li>
+<p><strong>Discuss Real-World Applications:</strong></p>
+</li>
+<li>Explore how these trajectories are relevant to space mission planning, satellite deployment, and planetary exploration.</li>
+<li>Provide insights on how to predict payload trajectories for various mission scenarios.</li>
+</ol>
+<h2 id="theory">Theory:</h2>
+<h3 id="gravitational-principles">Gravitational Principles:</h3>
+<ul>
+<li><strong>Newton’s Law of Gravitation:</strong><br/>
+  The gravitational force acting on an object with mass <code>m</code> near Earth is given by:</li>
+</ul>
+<p>[
+  F = \frac{G M_e m}{r^2}
+  ]</p>
+<p>Where:
+  - <span class="arithmatex">\( F \)</span> is the gravitational force,
+  - <span class="arithmatex">\( G \)</span> is the gravitational constant (<span class="arithmatex">\( 6.674 \times 10^{-11} \, \text{N} \cdot \text{m}^2 / \text{kg}^2 \)</span>),
+  - <span class="arithmatex">\( M_e \)</span> is Earth's mass (<span class="arithmatex">\( 5.972 \times 10^{24} \, \text{kg} \)</span>),
+  - <span class="arithmatex">\( r \)</span> is the distance from the center of the Earth.</p>
+<ul>
+<li><strong>Kepler's Laws:</strong><br/>
+  These laws describe the motion of planets (and payloads in orbit) under the influence of gravity:</li>
+<li><strong>Elliptical Orbits:</strong> Planets (or objects in space) move in elliptical orbits with the Sun (or Earth, in our case) at one focus.</li>
+<li><strong>Equal Areas in Equal Times:</strong> A line connecting a planet to the Sun sweeps out equal areas in equal times.</li>
+<li><strong>Harmonic Law:</strong> The square of the orbital period of a planet is proportional to the cube of the semi-major axis of its orbit.</li>
+</ul>
+<h3 id="trajectory-types">Trajectory Types:</h3>
+<ul>
+<li><strong>Parabolic Trajectory:</strong> An object that has exactly the escape velocity will follow a parabolic trajectory.</li>
+<li><strong>Elliptical Trajectory:</strong> An object in orbit will follow an elliptical path, which can be bound or unbound depending on the velocity and altitude.</li>
+<li><strong>Hyperbolic Trajectory:</strong> If the object has more than the escape velocity, it will follow a hyperbolic trajectory and escape Earth’s gravity.</li>
+</ul>
+<h3 id="escape-velocity">Escape Velocity:</h3>
+<p>The escape velocity <span class="arithmatex">\( v_e \)</span> is the minimum velocity needed for an object to escape Earth's gravitational influence, calculated as:</p>
+<div class="arithmatex">\[
+v_e = \sqrt{\frac{2 G M_e}{r}}
+\]</div>
+<p>Where:
+- <span class="arithmatex">\( v_e \)</span> is the escape velocity,
+- <span class="arithmatex">\( r \)</span> is the distance from the center of the Earth.</p>
+<h2 id="python-code-numerical-simulation">Python Code: Numerical Simulation</h2>
+<p>```python
+import numpy as np
+import matplotlib.pyplot as plt</p>
+<h1 id="constants">Constants</h1>
+<p>G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
+M_e = 5.972e24    # Earth's mass (kg)
+R_e = 6371e3      # Earth's radius (m)</p>
+<h1 id="initial-conditions">Initial conditions</h1>
+<p>initial_position = np.array([7000e3, 0])  # Position (m) [x, y]
+initial_velocity = np.array([0, 10e3])    # Velocity (m/s) [vx, vy]</p>
+<h1 id="time-settings">Time settings</h1>
+<p>dt = 10  # Time step (seconds)
+T = 10000  # Total time for simulation (seconds)
+times = np.arange(0, T, dt)</p>
+<h1 id="initialize-arrays-for-position-and-velocity">Initialize arrays for position and velocity</h1>
+<p>positions = []
+velocities = []
+position = initial_position
+velocity = initial_velocity</p>
+<h1 id="function-to-compute-the-gravitational-force">Function to compute the gravitational force</h1>
+<p>def gravitational_force(position):
+    r = np.linalg.norm(position)
+    force_magnitude = G * M_e / r**2
+    force_direction = -position / r  # Unit vector pointing towards Earth's center
+    return force_magnitude * force_direction</p>
+<h1 id="numerical-integration-eulers-method">Numerical integration (Euler's method)</h1>
+<p>for t in times:
+    positions.append(position)
+    velocities.append(velocity)</p>
+<pre><code># Compute acceleration
+force = gravitational_force(position)
+acceleration = force / 1  # Assuming mass = 1 kg for simplicity
+
+# Update velocity and position using Euler's method
+velocity += acceleration * dt
+position += velocity * dt
+</code></pre>
+<h1 id="convert-positions-and-velocities-to-arrays">Convert positions and velocities to arrays</h1>
+<p>positions = np.array(positions)</p>
+<h1 id="plot-the-trajectory">Plot the trajectory</h1>
+<p>plt.figure(figsize=(6, 6))
+plt.plot(positions[:, 0], positions[:, 1], label='Trajectory')
+plt.scatter(0, 0, color='red', label='Earth')
+plt.title('Trajectory of a Freely Released Payload Near Earth')
+plt.xlabel('X Position (m)')
+plt.ylabel('Y Position (m)')
+plt.legend()
+plt.grid(True)
+plt.axis('equal')
+plt.show()</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

@@ -122,6 +122,6 @@ plt.show()
 
 **Graphical representations of orbital trajectories, escape velocities, and payload trajectories near Earth.**
 
-![Orbital Trajectories and Escape Velocities](./_pics/Graph5.png)
+![Orbital Trajectories and Escape Velocities](../../_pics/Graph5.png)
 
-![Payload Trajocteries](./_pics/Graph6.png)
+![Payload Trajocteries](../../_pics/Graph6.png)

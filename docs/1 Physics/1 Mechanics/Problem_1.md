@@ -1,5 +1,5 @@
 #Problem 1
-1. Theoretical Foundation
+# Theoretical Foundation
 To derive the governing equations, start with Newton’s second law:
 
 The horizontal and vertical motion can be treated separately.
@@ -28,19 +28,19 @@ Gravity 𝑔
 Angle θ
 
 
-2. Analysis of the Range
+# Analysis of the Range
 The range is maximized when 𝜃 = 45∘
 Increasing 𝑣0 increases the range quadratically.
 Lower gravity (e.g., on the Moon) increases the range.
 You can explore how changing these parameters affects 𝑅
 
 
-3. Practical Applications
+# Practical Applications
 Sports: Optimizing throwing angles.
 Engineering: Projectile launches in varying gravity.
 Realistic factors like air resistance can reduce the range, requiring numerical methods for a solution.
  
-4. Implementation in Python
+# Implementation in Python
 
 import numpy as np
 import matplotlib.pyplot as plt

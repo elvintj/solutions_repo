@@ -248,44 +248,55 @@
 </ul>
 <h3 id="python-implementation">Python Implementation</h3>
 <p>The following Python script calculates the first and second cosmic velocities for Earth, Mars, and Jupiter:</p>
-<p>```python
-import numpy as np
-import matplotlib.pyplot as plt</p>
-<h1 id="constants_1">Constants</h1>
-<p>G = 6.67430e-11  # gravitational constant in m^3 kg^-1 s^-2</p>
-<h1 id="celestial-body-parameters-mass-in-kg-radius-in-m">Celestial body parameters (Mass in kg, Radius in m)</h1>
-<p>celestial_bodies = {
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.67430e-11  # gravitational constant in m^3 kg^-1 s^-2
+
+# Celestial body parameters (Mass in kg, Radius in m)
+celestial_bodies = {
     "Earth": {"mass": 5.972e24, "radius": 6.371e6},
     "Mars": {"mass": 0.64171e24, "radius": 3.396e6},
     "Jupiter": {"mass": 1.898e27, "radius": 6.991e7}
-}</p>
-<h1 id="calculate-escape-velocities-v_2-and-orbital-velocities-v_1">Calculate escape velocities (v_2) and orbital velocities (v_1)</h1>
-<p>def calculate_velocities(mass, radius):
+}
+
+# Calculate escape velocities (v_2) and orbital velocities (v_1)
+def calculate_velocities(mass, radius):
     v1 = np.sqrt(G * mass / radius)
     v2 = np.sqrt(2 * G * mass / radius)
-    return v1, v2</p>
-<h1 id="calculate-velocities-for-each-celestial-body">Calculate velocities for each celestial body</h1>
-<p>velocities = {}
+    return v1, v2
+
+# Calculate velocities for each celestial body
+velocities = {}
 for body, params in celestial_bodies.items():
     v1, v2 = calculate_velocities(params["mass"], params["radius"])
-    velocities[body] = {"v1": v1, "v2": v2}</p>
-<h1 id="plotting-the-velocities">Plotting the velocities</h1>
-<p>labels = list(velocities.keys())
+    velocities[body] = {"v1": v1, "v2": v2}
+
+# Plotting the velocities
+labels = list(velocities.keys())
 v1_values = [velocities[body]["v1"] for body in labels]
-v2_values = [velocities[body]["v2"] for body in labels]</p>
-<p>x = np.arange(len(labels))</p>
-<p>fig, ax = plt.subplots(figsize=(8, 6))
+v2_values = [velocities[body]["v2"] for body in labels]
+
+x = np.arange(len(labels))
+
+fig, ax = plt.subplots(figsize=(8, 6))
 bar_width = 0.35
 ax.bar(x - bar_width/2, v1_values, bar_width, label='Orbital Velocity (v1)')
-ax.bar(x + bar_width/2, v2_values, bar_width, label='Escape Velocity (v2)')</p>
-<p>ax.set_xlabel('Celestial Body')
+ax.bar(x + bar_width/2, v2_values, bar_width, label='Escape Velocity (v2)')
+
+ax.set_xlabel('Celestial Body')
 ax.set_ylabel('Velocity (m/s)')
 ax.set_title('Escape and Orbital Velocities of Different Celestial Bodies')
 ax.set_xticks(x)
 ax.set_xticklabels(labels)
-ax.legend()</p>
-<p>plt.tight_layout()
-plt.show()</p>
+ax.legend()
+
+plt.tight_layout()
+plt.show()
+</code></pre>
+<p><strong>Figure 1: Graphical representation of orbital and escape velocities for Earth, Mars, and Jupiter</strong></p>
+<p><img alt="Kepler's Third Law" src="/Users/elvintahmaz/Downloads/Graph4"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

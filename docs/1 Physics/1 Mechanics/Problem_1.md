@@ -68,4 +68,4 @@ plt.show()
 
 **Figure 1: Sample Trajectories of Projectile Motion**
 
-![Graphical Representation: Projectile Motion](./_pics/Graph01.png)
+![Graphical Representation: Projectile Motion](/Users/elvintahmaz/Downloads/Graph01.png)

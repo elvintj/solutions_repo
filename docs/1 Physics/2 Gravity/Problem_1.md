@@ -61,6 +61,6 @@ plt.grid()
 plt.show()
 ```
 
-**Figure 1: Graphical verification of Kepler's Third Law**
+**Graphical verification of Kepler's Third Law**
 
 ![Kepler's Third Law](/Users/elvintahmaz/Downloads/Graph3.jpg)

@@ -76,7 +76,7 @@ plt.show()
 ```
 ---
 
-**Figure 1: Simulated Angular Displacement Over Time**
+**Simulated Angular Displacement Over Time**
 
 ![Graphical Representation: Pendulum Motion](/Users/elvintahmaz/Downloads/Graph2.png)
 

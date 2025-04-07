@@ -157,20 +157,43 @@ def explore_parameters():
 explore_parameters()
 ```
 
-## Visualization:
+# Visualizations
 
-1. **Uniform Magnetic Field:** A 2D plot in the xy-plane showing circular motion.
-
+## 1. Uniform Magnetic Field 
+- **Trajectory:** Circular motion in the xy-plane due to \( \mathbf{B} \) along z.
+- **Larmor Radius:** \( r_L = \frac{m v_\perp}{|q| B} \approx 0.0104 \, \text{m} \) (with \( v_\perp = 1e3 \, \text{m/s} \), \( B = 0.1 \, \text{T} \)).
+- **Plot:** Circular path in 2D.
 ![Graphical Representation: Uniform Magnetic Field](../../_pics/UniformMagnetic2D.png)
+- **Explanation:** CA 2D plot in the xy-plane showing circular motion.
 
-2. **Combined Electric and Magnetic Fields:** A 3D plot showing helical motion with drift.
-
+## 2. Combined Electric and Magnetic Fields
+- **Trajectory:** Helical motion with drift along x due to \( \mathbf{E} \) in the x-direction.
+- **Phenomena:** Combines circular motion (from \( \mathbf{B} \)) and acceleration (from \( \mathbf{E} \)).
+- **Plot:** 3D helix with x-drift.
 ![Graphical Representation: Combined Electric and Magnetic Fields](../../_pics/Combined3D.png)
+- **Explanation:** A 3D plot showing helical motion with drift.
 
-3. **Crossed Electric and Magnetic Fields:** A 2D plot in the xy-plane showing cycloidal motion with drift.
-
+## 3. Crossed Electric and Magnetic Fields
+- **Trajectory:** Cycloidal motion with drift in the y-direction (perpendicular to \( \mathbf{E} \) and \( \mathbf{B} \)).
+- **Drift Velocity:** \( v_d = \frac{E}{B} = \frac{1e5}{0.1} = 1e6 \, \text{m/s} \).
+- **Plot:** 2D xy-plane shows drift and oscillation.
 ![Graphical Representation: Crossed Electric and Magnetic Fields](../../_pics/Crossed2D.png)
+- **Explanation:** A 2D plot in the xy-plane showing cycloidal motion with drift.
 
-4. **Parameter Exploration:** A 2D plot comparing trajectories for two different initial velocities in a uniform magnetic field.
-
+## Parameter Exploration
+- **Initial Velocity:** Doubling \( v_\perp \) from 1e3 to 2e3 m/s doubles the Larmor radius, expanding the circular path (see second plot).
 ![Graphical Representation: Parameter Exploration](../../_pics/Exploration2D.png)
+- **Explanation:** A 2D plot comparing trajectories for two different initial velocities in a uniform magnetic field.
+
+
+# Discussions
+- **Cyclotrons:** The uniform \( \mathbf{B} \) case reflects cyclotron motion, where particles orbit at a fixed radius, with \( \mathbf{E} \) fields (not simulated dynamically here) providing acceleration.
+- **Magnetic Traps:** Helical paths in combined fields mimic particle confinement in magnetic bottles or tokamaks.
+- **Mass Spectrometers:** Crossed fields simulate velocity selectors, filtering particles by \( v_d \).
+
+
+# Suggestions for Extension
+- **Non-Uniform Fields:** Model spatially varying \( \mathbf{E} \) or \( \mathbf{B} \) (e.g., magnetic gradients).
+- **Relativistic Effects:** Adjust for high-speed particles using relativistic dynamics.
+- **Multiple Particles:** Simulate interactions for plasma studies.
+- **Interactive Plots:** Use Plotly for real-time parameter exploration.

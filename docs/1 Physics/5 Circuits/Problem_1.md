@@ -43,20 +43,14 @@ Where:
 - \( m \): Mass (kg).
 
 The acceleration is:
-\(
-\mathbf{a} = \frac{\mathbf{F}}{m} = \frac{q}{m}(\mathbf{E} + \mathbf{v} \times \mathbf{B})
-\)
+\( \mathbf{a} = \frac{\mathbf{F}}{m} = \frac{q}{m}(\mathbf{E} + \mathbf{v} \times \mathbf{B}) \)
 
 ### Key Phenomena:
 - **Circular Motion:** In a uniform \( \mathbf{B} \) field (\( \mathbf{E} = 0 \)), the particle moves in a circle perpendicular to \( \mathbf{B} \), with Larmor radius:
-  \[
-  r_L = \frac{m v_\perp}{|q| B}
-  \]
+  \( r_L = \frac{m v_\perp}{|q| B} \)
 - **Helical Motion:** A velocity component parallel to \( \mathbf{B} \) adds a linear motion, forming a helix.
 - **Drift Motion:** In crossed \( \mathbf{E} \) and \( \mathbf{B} \) fields, the particle drifts with velocity:
-  \[
-  \mathbf{v}_d = \frac{\mathbf{E} \times \mathbf{B}}{B^2}
-  \]
+  \( \mathbf{v}_d = \frac{\mathbf{E} \times \mathbf{B}}{B^2} \)
 
 ## Exploration of Applications:
 1. **Particle Accelerators:** Magnetic fields guide particles in circular paths (e.g., cyclotrons), while electric fields boost their energy.

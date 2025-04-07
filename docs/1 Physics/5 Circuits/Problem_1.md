@@ -156,3 +156,21 @@ def explore_parameters():
 
 explore_parameters()
 ```
+
+## Visualization:
+
+1. **Uniform Magnetic Field:** A 2D plot in the xy-plane showing circular motion.
+
+![Graphical Representation: Uniform Magnetic Field](../../_pics/UniformMagnetic2D.png)
+
+2. **Combined Electric and Magnetic Fields:** A 3D plot showing helical motion with drift.
+
+![Graphical Representation: Combined Electric and Magnetic Fields](../../_pics/Combined3D.png)
+
+3. **Crossed Electric and Magnetic Fields:** A 2D plot in the xy-plane showing cycloidal motion with drift.
+
+![Graphical Representation: Crossed Electric and Magnetic Fields](../../_pics/Crossed2D.png)
+
+4. **Parameter Exploration:** A 2D plot comparing trajectories for two different initial velocities in a uniform magnetic field.
+
+![Graphical Representation: Parameter Exploration](../../_pics/Exploration2D.png)

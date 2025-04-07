@@ -124,3 +124,4 @@ R_parallel = (R1 * R2) / (R1 + R2)
 R_eq = 4 + ((12 * R_parallel) / (12 + R_parallel))
 print(f"Equivalent resistance: {R_eq:.3f} Ω")
 ```
+## Test

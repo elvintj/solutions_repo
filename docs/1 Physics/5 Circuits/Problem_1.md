@@ -43,9 +43,9 @@ Where:
 - \( m \): Mass (kg).
 
 The acceleration is:
-\[
+\(
 \mathbf{a} = \frac{\mathbf{F}}{m} = \frac{q}{m}(\mathbf{E} + \mathbf{v} \times \mathbf{B})
-\]
+\)
 
 ### Key Phenomena:
 - **Circular Motion:** In a uniform \( \mathbf{B} \) field (\( \mathbf{E} = 0 \)), the particle moves in a circle perpendicular to \( \mathbf{B} \), with Larmor radius:

@@ -58,7 +58,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../2%20Gravity/Problem_2/">Problem 2</a>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../2%20Gravity/Problem_3/">Problem 3: Trajectories of a Freely Released Payload Near Earth</a>
+<li class="toctree-l2"><a class="reference internal" href="../../2%20Gravity/Problem_3/">Problem 3:</a>
 </li>
 </ul>
 </li>
@@ -172,6 +172,123 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="equivalent-resistance-using-graph-theory">Equivalent Resistance Using Graph Theory</h1>
+<h2 id="motivation">Motivation:</h2>
+<p>Calculating equivalent resistance is a cornerstone of electrical circuit analysis, critical for designing efficient systems in electronics and engineering. Traditional methods, such as iteratively applying series and parallel resistor rules, can become tedious for complex circuits. Graph theory offers an elegant alternative by modeling circuits as graphs—nodes represent junctions, and edges represent resistors with weights equal to their resistance values. This approach enables systematic simplification of intricate networks and supports automated analysis, making it invaluable for circuit simulation, optimization, and network design. Beyond its practical utility, it bridges electrical engineering with mathematical concepts, showcasing the power of interdisciplinary methods.</p>
+<h2 id="task">Task:</h2>
+<ul>
+<li><strong>Implement an algorithm</strong> in Python to calculate the equivalent resistance of a circuit using graph theory.</li>
+<li><strong>Ensure the implementation:</strong></li>
+<li>Accepts a circuit graph as input.</li>
+<li>Handles arbitrary resistor configurations (series, parallel, and nested combinations).</li>
+<li>Outputs the final equivalent resistance.</li>
+<li><strong>Test the implementation</strong> with examples:</li>
+<li>Simple series and parallel combinations.</li>
+<li>Nested configurations.</li>
+<li>Complex graphs with multiple cycles.</li>
+<li><strong>Deliverables:</strong></li>
+<li>A detailed explanation of the algorithm and its implementation.</li>
+<li>Results for three example circuits.</li>
+<li>A brief analysis of efficiency and potential improvements.</li>
+</ul>
+<h2 id="theory">Theory:</h2>
+<h3 id="graph-representation">Graph Representation:</h3>
+<ul>
+<li><strong>Nodes:</strong> Represent junctions or connection points in the circuit.</li>
+<li><strong>Edges:</strong> Represent resistors, with weights equal to their resistance values (in ohms, Ω).</li>
+<li><strong>Series Connection:</strong> Two resistors are in series if they share a node with a degree of 2 (only connected to two edges).</li>
+<li><strong>Parallel Connection:</strong> Two resistors are in parallel if they share the same start and end nodes.</li>
+</ul>
+<h3 id="key-concepts">Key Concepts:</h3>
+<ul>
+<li><strong>Series Reduction:</strong> For resistors <span class="arithmatex">\( R_1 \)</span> and <span class="arithmatex">\( R_2 \)</span> in series, the equivalent resistance is:
+  [
+  R_{eq} = R_1 + R_2
+  ]</li>
+<li><strong>Parallel Reduction:</strong> For resistors <span class="arithmatex">\( R_1 \)</span> and <span class="arithmatex">\( R_2 \)</span> in parallel, the equivalent resistance is:
+  [
+  R_{eq} = \frac{R_1 \cdot R_2}{R_1 + R_2}
+  ]</li>
+<li><strong>Graph Simplification:</strong> Iteratively identify and reduce series and parallel configurations until the graph collapses to a single edge between the source and sink nodes.</li>
+</ul>
+<h2 id="algorithm-description">Algorithm Description:</h2>
+<ol>
+<li><strong>Input:</strong> A graph <span class="arithmatex">\( G \)</span> with nodes, edges (resistors), and weights (resistance values), plus source and sink nodes.</li>
+<li><strong>Steps:</strong></li>
+<li><strong>Identify Series Connections:</strong> Find nodes with degree 2, combine the adjacent edges, and remove the intermediate node.</li>
+<li><strong>Identify Parallel Connections:</strong> Find multiple edges between the same pair of nodes, compute their parallel equivalent, and replace profile_id_1them with a single edge.</li>
+<li><strong>Iterate:</strong> Repeat until only one edge remains between the source and sink.</li>
+<li><strong>Output:</strong> The weight of the final edge, representing the equivalent resistance.</li>
+</ol>
+<h2 id="python-implementation">Python Implementation:</h2>
+<p>```python
+import networkx as nx</p>
+<p>def reduce_series(G):
+    """Reduce series connections in the graph."""
+    while True:
+        series_node = None
+        for node in G.nodes():
+            if G.degree(node) == 2:  # Node connects exactly two edges
+                series_node = node
+                break
+        if not series_node:
+            break
+        neighbors = list(G.neighbors(series_node))
+        edge1 = G[neighbors[0]][series_node]
+        edge2 = G[series_node][neighbors[1]]
+        r1 = edge1['weight']
+        r2 = edge2['weight']
+        new_resistance = r1 + r2
+        G.add_edge(neighbors[0], neighbors[1], weight=new_resistance)
+        G.remove_node(series_node)</p>
+<p>def reduce_parallel(G):
+    """Reduce parallel connections in the graph."""
+    while True:
+        parallel_edges = None
+        for u in G.nodes():
+            for v in G.nodes():
+                if u &lt; v and G.number_of_edges(u, v) &gt; 1:  # Multiple edges between u and v
+                    parallel_edges = (u, v)
+                    break
+            if parallel_edges:
+                break
+        if not parallel_edges:
+            break
+        u, v = parallel_edges
+        edges = G[u][v]
+        resistances = [data['weight'] for data in edges.values()]
+        parallel_res = 1 / sum(1/r for r in resistances)  # Parallel formula
+        G.remove_edges_from([(u, v)] * len(resistances))
+        G.add_edge(u, v, weight=parallel_res)</p>
+<p>def equivalent_resistance(G, source, sink):
+    """Calculate equivalent resistance between source and sink."""
+    G = G.copy()  # Avoid modifying the original graph
+    while G.number_of_nodes() &gt; 2 or G.number_of_edges() &gt; 1:
+        reduce_series(G)
+        reduce_parallel(G)
+    return G[source][sink][0]['weight']</p>
+<h1 id="example-circuits">Example Circuits</h1>
+<p>def test_circuits():
+    # Example 1: Simple Series (2Ω + 3Ω)
+    G1 = nx.MultiGraph()
+    G1.add_edge('A', 'B', weight=2)
+    G1.add_edge('B', 'C', weight=3)
+    print("Example 1 - Series (2Ω + 3Ω):", equivalent_resistance(G1, 'A', 'C'), "Ω")</p>
+<pre><code># Example 2: Simple Parallel (4Ω || 4Ω)
+G2 = nx.MultiGraph()
+G2.add_edge('A', 'B', weight=4)
+G2.add_edge('A', 'B', weight=4)
+print("Example 2 - Parallel (4Ω || 4Ω):", equivalent_resistance(G2, 'A', 'B'), "Ω")
+
+# Example 3: Nested (2Ω in series with (3Ω || 6Ω))
+G3 = nx.MultiGraph()
+G3.add_edge('A', 'B', weight=2)
+G3.add_edge('B', 'C', weight=3)
+G3.add_edge('B', 'C', weight=6)
+print("Example 3 - Nested (2Ω + (3Ω || 6Ω)):", equivalent_resistance(G3, 'A', 'C'), "Ω")
+</code></pre>
+<h1 id="run-the-tests">Run the tests</h1>
+<p>test_circuits()</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

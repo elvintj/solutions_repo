@@ -194,6 +194,6 @@ explore_parameters()
 
 # Suggestions for Extension
 - **Non-Uniform Fields:** Model spatially varying \( \mathbf{E} \) or \( \mathbf{B} \) (e.g., magnetic gradients).
-- **Relativistic Effects:** Adjust for high-speed particles using relativistic dynamics.
-- **Multiple Particles:** Simulate interactions for plasma studies.
-- **Interactive Plots:** Use Plotly for real-time parameter exploration.
+- **Relativistic Effects:** Adjusting for high-speed particles using relativistic dynamics.
+- **Multiple Particles:** Simulating interactions for plasma studies.
+- **Interactive Plots:** Using Plotly for real-time parameter exploration.

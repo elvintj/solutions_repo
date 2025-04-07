@@ -121,3 +121,5 @@ def test_circuits():
 
 # Run the tests
 test_circuits()
+```
+- **Efficiency Analysis:** Iteratively identify and reduce series and parallel configurations until the graph collapses to a single edge between the source and sink nodes.

@@ -221,9 +221,9 @@
 <li><strong>Output:</strong> The weight of the final edge, representing the equivalent resistance.</li>
 </ol>
 <h2 id="python-implementation">Python Implementation:</h2>
-<p>```python
-import networkx as nx</p>
-<p>def reduce_series(G):
+<pre><code class="language-python">import networkx as nx
+
+def reduce_series(G):
     """Reduce series connections in the graph."""
     while True:
         series_node = None
@@ -240,8 +240,9 @@ import networkx as nx</p>
         r2 = edge2['weight']
         new_resistance = r1 + r2
         G.add_edge(neighbors[0], neighbors[1], weight=new_resistance)
-        G.remove_node(series_node)</p>
-<p>def reduce_parallel(G):
+        G.remove_node(series_node)
+
+def reduce_parallel(G):
     """Reduce parallel connections in the graph."""
     while True:
         parallel_edges = None
@@ -259,36 +260,43 @@ import networkx as nx</p>
         resistances = [data['weight'] for data in edges.values()]
         parallel_res = 1 / sum(1/r for r in resistances)  # Parallel formula
         G.remove_edges_from([(u, v)] * len(resistances))
-        G.add_edge(u, v, weight=parallel_res)</p>
-<p>def equivalent_resistance(G, source, sink):
+        G.add_edge(u, v, weight=parallel_res)
+
+def equivalent_resistance(G, source, sink):
     """Calculate equivalent resistance between source and sink."""
     G = G.copy()  # Avoid modifying the original graph
     while G.number_of_nodes() &gt; 2 or G.number_of_edges() &gt; 1:
         reduce_series(G)
         reduce_parallel(G)
-    return G[source][sink][0]['weight']</p>
-<h1 id="example-circuits">Example Circuits</h1>
-<p>def test_circuits():
+    return G[source][sink][0]['weight']
+
+# Example Circuits
+def test_circuits():
     # Example 1: Simple Series (2Ω + 3Ω)
     G1 = nx.MultiGraph()
     G1.add_edge('A', 'B', weight=2)
     G1.add_edge('B', 'C', weight=3)
-    print("Example 1 - Series (2Ω + 3Ω):", equivalent_resistance(G1, 'A', 'C'), "Ω")</p>
-<pre><code># Example 2: Simple Parallel (4Ω || 4Ω)
-G2 = nx.MultiGraph()
-G2.add_edge('A', 'B', weight=4)
-G2.add_edge('A', 'B', weight=4)
-print("Example 2 - Parallel (4Ω || 4Ω):", equivalent_resistance(G2, 'A', 'B'), "Ω")
+    print("Example 1 - Series (2Ω + 3Ω):", equivalent_resistance(G1, 'A', 'C'), "Ω")
 
-# Example 3: Nested (2Ω in series with (3Ω || 6Ω))
-G3 = nx.MultiGraph()
-G3.add_edge('A', 'B', weight=2)
-G3.add_edge('B', 'C', weight=3)
-G3.add_edge('B', 'C', weight=6)
-print("Example 3 - Nested (2Ω + (3Ω || 6Ω)):", equivalent_resistance(G3, 'A', 'C'), "Ω")
+    # Example 2: Simple Parallel (4Ω || 4Ω)
+    G2 = nx.MultiGraph()
+    G2.add_edge('A', 'B', weight=4)
+    G2.add_edge('A', 'B', weight=4)
+    print("Example 2 - Parallel (4Ω || 4Ω):", equivalent_resistance(G2, 'A', 'B'), "Ω")
+
+    # Example 3: Nested (2Ω in series with (3Ω || 6Ω))
+    G3 = nx.MultiGraph()
+    G3.add_edge('A', 'B', weight=2)
+    G3.add_edge('B', 'C', weight=3)
+    G3.add_edge('B', 'C', weight=6)
+    print("Example 3 - Nested (2Ω + (3Ω || 6Ω)):", equivalent_resistance(G3, 'A', 'C'), "Ω")
+
+# Run the tests
+test_circuits()
 </code></pre>
-<h1 id="run-the-tests">Run the tests</h1>
-<p>test_circuits()</p>
+<ul>
+<li><strong>Efficiency Analysis:</strong> Iteratively identify and reduce series and parallel configurations until the graph collapses to a single edge between the source and sink nodes.</li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

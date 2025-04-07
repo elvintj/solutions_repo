@@ -34,9 +34,7 @@ The Lorentz force, expressed as \( \mathbf{F} = q\mathbf{E} + q(\mathbf{v} \time
 
 ### Lorentz Force:
 The force on a charged particle is:
-\[
-\mathbf{F} = q\mathbf{E} + q(\mathbf{v} \times \mathbf{B})
-\]
+\( \mathbf{F} = q\mathbf{E} + q(\mathbf{v} \times \mathbf{B}) \)
 Where:
 - \( q \): Charge (Coulombs),
 - \( \mathbf{E} \): Electric field (N/C),

@@ -1,4 +1,5 @@
-# Problem 3: Trajectories of a Freely Released Payload Near Earth
+# Problem 3: 
+# Trajectories of a Freely Released Payload Near Earth
 
 ## Motivation:
 When an object is released from a moving rocket near Earth, its trajectory is determined by its initial conditions (position, velocity, and altitude) and the gravitational forces acting on it. The study of these trajectories is crucial for various space mission scenarios such as deploying payloads, orbital insertion, reentry, and escape.

@@ -172,6 +172,161 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="interference-patterns-on-a-water-surface">Interference Patterns on a Water Surface</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>We need to analyze the interference patterns formed on a water surface due to the superposition of circular waves emitted from point sources placed at the vertices of a regular polygon. The wave equation for a single source is given as:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \frac{A}{\sqrt{r}} \cdot \cos(kr - \omega t + \phi)
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\eta(x, y, t)\)</span> is the displacement of the water surface at point <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>,</li>
+<li><span class="arithmatex">\(A\)</span> is the amplitude of the wave,</li>
+<li><span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> is the wave number, related to the wavelength <span class="arithmatex">\(\lambda\)</span>,</li>
+<li><span class="arithmatex">\(\omega = 2\pi f\)</span> is the angular frequency, related to the frequency <span class="arithmatex">\(f\)</span>,</li>
+<li><span class="arithmatex">\(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\)</span> is the distance from the source at <span class="arithmatex">\((x_0, y_0)\)</span> to the point <span class="arithmatex">\((x, y)\)</span>,</li>
+<li><span class="arithmatex">\(\phi\)</span> is the initial phase.</li>
+</ul>
+<p>Our task involves:</p>
+<ol>
+<li>Selecting a regular polygon and placing wave sources at its vertices.</li>
+<li>Writing the wave equations for each source.</li>
+<li>Applying the principle of superposition to sum the displacements.</li>
+<li>Analyzing the resulting interference patterns.</li>
+<li>Visualizing the patterns graphically.</li>
+</ol>
+<hr/>
+<h2 id="step-1-select-a-regular-polygon">Step 1: Select a Regular Polygon</h2>
+<p>Let’s choose a <strong>square</strong> as our regular polygon. A square has 4 vertices, so we will have <span class="arithmatex">\(N = 4\)</span> point sources. We’ll place the square in the <span class="arithmatex">\(xy\)</span>-plane, centered at the origin <span class="arithmatex">\((0, 0)\)</span>, with a side length of <span class="arithmatex">\(2a\)</span>. For simplicity, let’s set <span class="arithmatex">\(a = 1\)</span>, so the side length is 2 units.</p>
+<p>The vertices of the square are:</p>
+<ul>
+<li>Vertex 1: <span class="arithmatex">\((1, 1)\)</span></li>
+<li>Vertex 2: <span class="arithmatex">\((1, -1)\)</span></li>
+<li>Vertex 3: <span class="arithmatex">\((-1, -1)\)</span></li>
+<li>Vertex 4: <span class="arithmatex">\((-1, 1)\)</span></li>
+</ul>
+<p>Each vertex will be a point source emitting circular waves.</p>
+<hr/>
+<h2 id="step-2-position-the-sources">Step 2: Position the Sources</h2>
+<p>The positions of the sources are:</p>
+<ul>
+<li>Source 1: <span class="arithmatex">\((x_1, y_1) = (1, 1)\)</span></li>
+<li>Source 2: <span class="arithmatex">\((x_2, y_2) = (1, -1)\)</span></li>
+<li>Source 3: <span class="arithmatex">\((x_3, y_3) = (-1, -1)\)</span></li>
+<li>Source 4: <span class="arithmatex">\((x_4, y_4) = (-1, 1)\)</span></li>
+</ul>
+<hr/>
+<h2 id="step-3-wave-equations">Step 3: Wave Equations</h2>
+<p>Each source emits a wave of the form:</p>
+<div class="arithmatex">\[
+\eta_i(x, y, t) = \frac{A}{\sqrt{r_i}} \cdot \cos(k r_i - \omega t + \phi_i)
+\]</div>
+<p>where <span class="arithmatex">\(r_i = \sqrt{(x - x_i)^2 + (y - y_i)^2}\)</span> is the distance from the <span class="arithmatex">\(i\)</span>-th source to the point <span class="arithmatex">\((x, y)\)</span>.</p>
+<h3 id="assumptions">Assumptions:</h3>
+<ul>
+<li>All sources have the same amplitude <span class="arithmatex">\(A\)</span>.</li>
+<li>All sources have the same wavelength <span class="arithmatex">\(\lambda\)</span> and frequency <span class="arithmatex">\(f\)</span>, so <span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> and <span class="arithmatex">\(\omega = 2\pi f\)</span> are the same for all sources.</li>
+<li>The waves are coherent, meaning the phase difference between sources is constant. For simplicity, let’s assume the initial phase <span class="arithmatex">\(\phi_i = 0\)</span> for all sources (i.e., all sources are in phase).</li>
+</ul>
+<p>Let’s set some numerical values for the parameters:</p>
+<ul>
+<li>Amplitude <span class="arithmatex">\(A = 1\)</span>,</li>
+<li>Wavelength <span class="arithmatex">\(\lambda = 1\)</span>, so <span class="arithmatex">\(k = \frac{2\pi}{\lambda} = 2\pi\)</span>,</li>
+<li>Frequency <span class="arithmatex">\(f = 1\)</span>, so <span class="arithmatex">\(\omega = 2\pi f = 2\pi\)</span>,</li>
+<li>Initial phase <span class="arithmatex">\(\phi_i = 0\)</span>.</li>
+</ul>
+<p>Thus, the wave equation for the <span class="arithmatex">\(i\)</span>-th source becomes:</p>
+<div class="arithmatex">\[
+\eta_i(x, y, t) = \frac{1}{\sqrt{r_i}} \cdot \cos(2\pi r_i - 2\pi t)
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(r_1 = \sqrt{(x - 1)^2 + (y - 1)^2}\)</span>,</li>
+<li><span class="arithmatex">\(r_2 = \sqrt{(x - 1)^2 + (y + 1)^2}\)</span>,</li>
+<li><span class="arithmatex">\(r_3 = \sqrt{(x + 1)^2 + (y + 1)^2}\)</span>,</li>
+<li><span class="arithmatex">\(r_4 = \sqrt{(x + 1)^2 + (y - 1)^2}\)</span>.</li>
+</ul>
+<hr/>
+<h2 id="step-4-superposition-of-waves">Step 4: Superposition of Waves</h2>
+<p>The total displacement at a point <span class="arithmatex">\((x, y)\)</span> at time <span class="arithmatex">\(t\)</span> is the sum of the displacements from all sources:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \sum_{i=1}^{N} \eta_i(x, y, t)
+\]</div>
+<p>For our square with 4 sources:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \eta_1 + \eta_2 + \eta_3 + \eta_4
+\]</div>
+<div class="arithmatex">\[
+\eta(x, y, t) = \sum_{i=1}^{4} \frac{1}{\sqrt{r_i}} \cdot \cos(2\pi r_i - 2\pi t)
+\]</div>
+<hr/>
+<h2 id="step-5-analyze-interference-patterns">Step 5: Analyze Interference Patterns</h2>
+<p>To analyze the interference patterns, we need to compute <span class="arithmatex">\(\eta(x, y, t)\)</span> over a grid of points <span class="arithmatex">\((x, y)\)</span> at a specific time <span class="arithmatex">\(t\)</span>. Let’s fix <span class="arithmatex">\(t = 0\)</span> for simplicity, so the equation becomes:</p>
+<div class="arithmatex">\[
+\eta(x, y, 0) = \sum_{i=1}^{4} \frac{1}{\sqrt{r_i}} \cdot \cos(2\pi r_i)
+\]</div>
+<h3 id="constructive-interference">Constructive Interference:</h3>
+<p>Constructive interference occurs when the waves from different sources are in phase, i.e., when the phase difference <span class="arithmatex">\(k(r_i - r_j)\)</span> between any two sources is an integer multiple of <span class="arithmatex">\(2\pi\)</span>. This happens when:</p>
+<div class="arithmatex">\[
+|r_i - r_j| = m \lambda \quad (m = 0, 1, 2, \dots)
+\]</div>
+<p>Since <span class="arithmatex">\(\lambda = 1\)</span>, constructive interference occurs when the path difference <span class="arithmatex">\(|r_i - r_j|\)</span> is an integer.</p>
+<h3 id="destructive-interference">Destructive Interference:</h3>
+<p>Destructive interference occurs when the waves are out of phase by <span class="arithmatex">\(\pi\)</span> radians, i.e., when:</p>
+<div class="arithmatex">\[
+|r_i - r_j| = \left(m + \frac{1}{2}\right) \lambda \quad (m = 0, 1, 2, \dots)
+\]</div>
+<p>For <span class="arithmatex">\(\lambda = 1\)</span>, this happens when the path difference is a half-integer (e.g., 0.5, 1.5, 2.5, ...).</p>
+<p>We’ll visualize the total displacement <span class="arithmatex">\(\eta(x, y, 0)\)</span> to identify these regions.</p>
+<hr/>
+<h2 id="step-6-visualization">Step 6: Visualization</h2>
+<p>Below is a Python script that computes and visualizes the interference pattern using NumPy and Matplotlib. The script creates a 2D grid of points, calculates the total displacement, and plots the result as a heatmap.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters
+A = 1.0  # Amplitude
+lambda_ = 1.0  # Wavelength
+k = 2 * np.pi / lambda_  # Wave number
+t = 0.0  # Time (fixed at t=0 for visualization)
+
+# Define the positions of the sources (vertices of a square)
+sources = [
+    (1, 1),   # Source 1
+    (1, -1),  # Source 2
+    (-1, -1), # Source 3
+    (-1, 1)   # Source 4
+]
+
+# Create a grid of points
+x = np.linspace(-5, 5, 100)  # x-range
+y = np.linspace(-5, 5, 100)  # y-range
+X, Y = np.meshgrid(x, y)
+
+# Initialize the total displacement
+eta = np.zeros_like(X)
+
+# Sum the contributions from each source
+for (x0, y0) in sources:
+    # Distance from the source to each point on the grid
+    r = np.sqrt((X - x0)**2 + (Y - y0)**2)
+    # Avoid division by zero at the source
+    r = np.where(r &lt; 1e-6, 1e-6, r)
+    # Wave contribution from this source
+    eta += (A / np.sqrt(r)) * np.cos(k * r)
+
+# Plot the interference pattern
+plt.figure(figsize=(8, 8))
+plt.contourf(X, Y, eta, cmap='seismic', levels=50)
+plt.colorbar(label='Displacement')
+plt.scatter([s[0] for s in sources], [s[1] for s in sources], c='black', marker='o', label='Sources')
+plt.title('Interference Pattern from Four Sources (Square)')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.grid(True)
+plt.show()
+</code></pre>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

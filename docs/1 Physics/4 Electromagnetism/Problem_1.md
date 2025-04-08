@@ -236,6 +236,7 @@ The algorithm can be broken down into the following key steps:
    - If so, return the weight of that edge as the equivalent resistance; otherwise, return `None` to indicate an error.
 
 
+
 # Analysis
 
 ## How It Handles Complex Configurations

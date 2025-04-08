@@ -150,9 +150,23 @@ if __name__ == "__main__":
 ![Graphical Representation: Simple Series Circuit](../../_pics/Test1.1.png)
 
 **Final Series Circuit:**
-![Graphical Representation: Simple Series Circuit](../../_pics/Test1.2.png)
+![Graphical Representation: Final Series Circuit](../../_pics/Test1.2.png)
 
 This test works correctly, producing 9Ω as we expected.
+
+
+### Test Case 2: Parellel Circuit
+**Conditions:**
+- R1(2Ω) || R2(4Ω)
+- Expected: 1.33Ω
+
+**Initial Parallel Circuit:**
+![Graphical Representation: Initial Parallel Circuit](../../_pics/Test2.1.png)
+
+**Reduced Parallel Circuit:**
+![Graphical Representation: Reduced Parallel Circuit](../../_pics/Test2.2.png)
+
+This test works correctly, producing 1.33Ω as we expected.
 
 
 

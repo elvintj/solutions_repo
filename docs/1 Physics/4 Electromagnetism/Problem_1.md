@@ -193,6 +193,48 @@ D ----------- E
 This test works correctly,  as we expected.
 
 
+# Detailed Explanation of the Equivalent Resistance Algorithm Using Graph Theory
+
+## Overview
+
+The algorithm calculates the equivalent resistance between two nodes in an electrical circuit by representing the circuit as a graph and iteratively simplifying it using series and parallel reduction rules. The circuit is modeled as a **multi-graph**, where:
+
+- **Nodes** represent junction points in the circuit.
+- **Edges** represent resistors, with the edge weight being the resistance value (in ohms, Ω).
+- Multiple edges between the same pair of nodes are allowed, representing resistors in parallel.
+
+The algorithm iteratively applies two fundamental electrical rules—series and parallel reductions—until the graph is reduced to a single edge between the start and end nodes, whose weight is the equivalent resistance. The implementation uses the `networkx` library in Python to handle graph operations and `matplotlib` for visualization.
+
+## Algorithm Steps
+
+The algorithm can be broken down into the following key steps:
+
+1. **Graph Representation**:
+   - The circuit is represented as a `nx.MultiGraph`, which allows multiple edges between the same pair of nodes (important for parallel resistors).
+   - Each edge has a `weight` attribute representing the resistance value.
+
+2. **Series Reduction**:
+   - Identify nodes with exactly two neighbors (degree 2), which indicate resistors in series.
+   - Combine the resistances of the two edges connected to this node by adding them.
+   - Remove the intermediate node and replace the two edges with a single edge whose weight is the sum of the resistances.
+
+3. **Parallel Reduction**:
+   - Identify pairs of nodes with multiple edges between them, indicating resistors in parallel.
+   - Compute the equivalent resistance using the parallel formula: \( \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \).
+   - Remove all parallel edges and add a single edge with the equivalent resistance.
+
+4. **Zero-Resistance Handling**:
+   - Identify edges with zero resistance (direct connections).
+   - Contract the nodes connected by zero-resistance edges into a single node, effectively merging them since they are at the same electrical potential.
+
+5. **Iterative Simplification**:
+   - Repeatedly apply series reduction, parallel reduction, and zero-resistance handling until no further simplifications are possible.
+   - A safeguard (maximum iteration limit) prevents infinite loops in case the graph cannot be reduced further.
+
+6. **Final Check**:
+   - Check if the final graph has a single edge between the specified start and end nodes.
+   - If so, return the weight of that edge as the equivalent resistance; otherwise, return `None` to indicate an error.
+
 
 # Analysis
 

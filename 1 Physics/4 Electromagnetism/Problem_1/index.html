@@ -172,95 +172,103 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1:</h1>
-<h1 id="equivalent-resistance-using-graph-theory">Equivalent Resistance Using Graph Theory</h1>
-<h2 id="motivation">Motivation</h2>
-<p>Calculating equivalent resistance is essential in understanding electrical circuits, especially when circuits become too complex for traditional methods. Graph theory offers a clean and algorithmic approach for modeling, simplifying, and computing resistances. By treating junctions as nodes and resistors as weighted edges, we can use graph reduction techniques to evaluate the total resistance.</p>
-<p>This task demonstrates how graph theory can be applied to simplify complex resistor networks, both through code and visual step-by-step simplifications.</p>
-<hr/>
-<h2 id="task">Task</h2>
-<ul>
-<li>Implement an algorithm that reduces a resistor network using graph theory.</li>
-<li>Visualize each step of the simplification.</li>
-<li>Demonstrate on a sample graph with both series and parallel connections.</li>
-</ul>
-<hr/>
-<h2 id="theory">Theory</h2>
-<h3 id="series-connection">Series Connection</h3>
-<p>Two resistors in series:
-[
-R_{eq} = R_1 + R_2
-]</p>
-<h3 id="parallel-connection">Parallel Connection</h3>
-<p>Two resistors in parallel:
-[
-\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2}
-\quad \Rightarrow \quad
-R_{eq} = \frac{R_1 \cdot R_2}{R_1 + R_2}
-]</p>
-<hr/>
-<h2 id="circuit-example">Circuit Example</h2>
-<p>We will use a graph that has the following structure:</p>
-<ul>
-<li><code>A</code> — <code>B</code> with 4Ω</li>
-<li><code>B</code> — <code>C</code> with 6Ω</li>
-<li><code>C</code> — <code>D</code> with 12Ω</li>
-<li><code>B</code> — <code>D</code> with 12Ω</li>
-</ul>
-<p>This graph has:
-- A <strong>series path</strong>: B → C → D
-- A <strong>parallel connection</strong>: (B → C → D) in parallel with (B → D)</p>
-<hr/>
-<h2 id="step-by-step-simplification">Step-by-Step Simplification</h2>
-<h3 id="original-circuit">🧩 Original Circuit</h3>
-<p><img alt="Original Circuit" src="../../_pics/original_graph.png"/></p>
-<hr/>
-<h3 id="step-1-combine-b-c-d-into-series-6-12-18-then-find-parallel-with-12">🔧 Step 1: Combine B-C-D into Series (6Ω + 12Ω = 18Ω), then find parallel with 12Ω</h3>
-<div class="arithmatex">\[
-R_{parallel} = \frac{12 \cdot 18}{12 + 18} = 7.2Ω
-\]</div>
-<p><img alt="Step 1" src="../../_pics/step1_graph.png"/></p>
-<hr/>
-<h3 id="step-2-replace-b-d-with-single-equivalent-72">🔧 Step 2: Replace B-D with single equivalent 7.2Ω</h3>
-<p>Then combine the parallel B-D branches:</p>
-<div class="arithmatex">\[
-R_{BD} = \frac{12 \cdot 7.2}{12 + 7.2} = 4.571Ω
-\]</div>
-<p><img alt="Step 2" src="../../_pics/step2_graph.png"/></p>
-<hr/>
-<h3 id="final-step-combine-a-b-d-in-series">🧮 Final Step: Combine A-B-D in series</h3>
-<div class="arithmatex">\[
-R_{eq} = 4Ω + 4.571Ω = 8.571Ω
-\]</div>
-<p><img alt="Final Graph" src="../../_pics/final_graph.png"/></p>
-<hr/>
-<h2 id="final-result">Final Result</h2>
-<p><strong>Total Equivalent Resistance</strong>:<br/>
-[
-R_{eq} = \boxed{8.571\, \Omega}
-]</p>
-<hr/>
-<h2 id="python-code">Python Code</h2>
-<pre><code class="language-python">import networkx as nx
+<h1 id="equivalent-resistance-calculation-using-graph-theory">Equivalent Resistance Calculation Using Graph Theory</h1>
+<h2 id="algorithm-description">Algorithm Description</h2>
+<p>In this solution, we will use a graph-based approach to calculate equivalent resistance by iteratively simplifying the circuit through series and parallel reductions. To implementat, we will use Python with the NetworkX library for graph manipulation.</p>
+<h3 id="key-concepts">Key Concepts</h3>
+<ol>
+<li><strong>Graph Representation</strong>:</li>
+<li>Nodes represent junction points</li>
+<li>
+<p>Edges represent resistors with weights as resistance values</p>
+</li>
+<li>
+<p><strong>Simplification Rules</strong>:</p>
+</li>
+<li>Series: R_eq = R1 + R2 + ... + Rn (for resistors in a linear path)</li>
+<li>
+<p>Parallel: 1/R_eq = 1/R1 + 1/R2 + ... + 1/Rn (for resistors between same nodes)</p>
+</li>
+<li>
+<p><strong>Steps of the Algorithm</strong>:</p>
+</li>
+<li>Identifying series connections (nodes with degree 2)</li>
+<li>Identifying parallel connections (multiple edges between same nodes)</li>
+<li>Iteratively simplifying until only two nodes remain</li>
+<li>Returning the final resistance value</li>
+</ol>
+<h2 id="implementation">Implementation</h2>
+<pre><code class="language-python"># Starts here
+import networkx as nx
 import matplotlib.pyplot as plt
 
-# Create Graph
-G = nx.Graph()
-G.add_edge('A', 'B', resistance=4)
-G.add_edge('B', 'C', resistance=6)
-G.add_edge('C', 'D', resistance=12)
-G.add_edge('B', 'D', resistance=12)
+class CircuitAnalyzer:
+    def __init__(self):
+        self.G = nx.MultiGraph()  # This allows multiple edges between nodes
 
-# Series: B-C-D = 6 + 12 = 18
-# Then parallel with B-D (12Ω)
-R1 = 18
-R2 = 12
-R_parallel = (R1 * R2) / (R1 + R2)
+    def add_resistor(self, node1, node2, resistance):
+        self.G.add_edge(node1, node2, weight=resistance)
 
-# Combine A-B and B-D in series
-R_eq = 4 + ((12 * R_parallel) / (12 + R_parallel))
-print(f"Equivalent resistance: {R_eq:.3f} Ω")
+    def reduce_series(self):
+        """Reduce series connections (nodes with degree 2)"""
+        while True:
+            series_nodes = [n for n in self.G.nodes() if self.G.degree(n) == 2]
+            if not series_nodes:
+                break
+
+            node = series_nodes[0]
+            neighbors = list(self.G.neighbors(node))
+            if len(neighbors) != 2:
+                continue
+
+            n1, n2 = neighbors
+            r1 = self.G[n1][node][0]['weight']
+            r2 = self.G[node][n2][0]['weight']
+
+            # Creating new edge with combined resistance
+            self.G.add_edge(n1, n2, weight=r1 + r2)
+            self.G.remove_node(node)
+
+    def reduce_parallel(self):
+        """Reduce parallel connections (multiple edges between same nodes)"""
+        while True:
+            parallel_found = False
+            for n1 in self.G.nodes():
+                for n2 in self.G.nodes():
+                    if n1 &gt;= n2:
+                        continue
+                    edges = self.G.get_edge_data(n1, n2)
+                    if edges and len(edges) &gt; 1:
+                        parallel_found = True
+                        # Calculating parallel resistance
+                        total_inv = sum(1/e['weight'] for e in edges.values())
+                        r_eq = 1/total_inv if total_inv != 0 else 0
+
+                        # Removing all edges and add equivalent
+                        self.G.remove_edges_from([(n1, n2, k) for k in edges.keys()])
+                        self.G.add_edge(n1, n2, weight=r_eq)
+            if not parallel_found:
+                break
+
+    def calculate_equivalent_resistance(self, start_node, end_node):
+        """Calculate equivalent resistance between two nodes"""
+        while len(self.G.nodes()) &gt; 2:
+            self.reduce_series()
+            self.reduce_parallel()
+
+        if len(self.G.edges()) == 1:
+            return list(self.G.edges(data=True))[0][2]['weight']
+        return None
+
+# This is the Function to visualize graph
+def draw_circuit(G, title):
+    pos = nx.spring_layout(G)
+    nx.draw(G, pos, with_labels=True)
+    edge_labels = nx.get_edge_attributes(G, 'weight')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels)
+    plt.title(title)
+    plt.show()
 </code></pre>
-<h2 id="test">Test</h2>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

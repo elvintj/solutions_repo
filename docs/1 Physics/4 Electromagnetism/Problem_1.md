@@ -1,262 +1,199 @@
 # Problem 1: 
-# Equivalent Resistance Calculation Using Graph Theory
+# Simulating the Effects of the Lorentz Force
 
-## Algorithm Description
+## Motivation:
+The Lorentz force, expressed as \( \mathbf{F} = q\mathbf{E} + q(\mathbf{v} \times \mathbf{B}) \), dictates the motion of charged particles in electric (\( \mathbf{E} \)) and magnetic (\( \mathbf{B} \)) fields. This principle is foundational in plasma physics, particle accelerators, and astrophysics. Simulations allow us to explore its practical applications and visualize the intricate trajectories—such as circular, helical, or drift motions—that emerge. By modeling these effects, we gain insights into how fields control particle behavior in real-world systems, bridging theoretical physics with engineering applications.
 
-In this solution, we will use a graph-based approach to calculate equivalent resistance by iteratively simplifying the circuit through series and parallel reductions. To implementat, we will use Python with the NetworkX library for graph manipulation.
+## Task:
+1. **Exploration of Applications:**
+   - Identify systems where the Lorentz force is pivotal (e.g., particle accelerators, mass spectrometers, plasma confinement).
+   - Discuss the roles of electric (\( \mathbf{E} \)) and magnetic (\( \mathbf{B} \)) fields in particle motion control.
+2. **Simulating Particle Motion:**
+   - Implement a simulation to compute and visualize a charged particle’s trajectory under:
+     - A uniform magnetic field.
+     - Combined uniform electric and magnetic fields.
+     - Crossed electric and magnetic fields.
+   - Capture circular, helical, or drift motion based on initial conditions and field configurations.
+3. **Parameter Exploration:**
+   - Vary:
+     - Field strengths (\( \mathbf{E} \), \( \mathbf{B} \)).
+     - Initial particle velocity (\( \mathbf{v} \)).
+     - Charge and mass (\( q \), \( m \)).
+   - Observe their influence on the trajectory.
+4. **Visualization:**
+   - Create labeled 2D and 3D plots of the particle’s path for different scenarios.
+   - Highlight phenomena like the Larmor radius and drift velocity.
 
-### Key Concepts
-1. **Graph Representation**:
-   - Nodes represent junction points
-   - Edges represent resistors with weights as resistance values
+## Deliverables:
+- A Markdown document with a Python script implementing the simulations.
+- Visualizations of trajectories for the specified field configurations.
+- A discussion linking results to practical systems (e.g., cyclotrons, magnetic traps).
+- Suggestions for extending the simulation to complex scenarios, such as non-uniform fields.
 
-2. **Simplification Rules**:
-   - Series: R_eq = R1 + R2 + ... + Rn (for resistors in a linear path)
-   - Parallel: 1/R_eq = 1/R1 + 1/R2 + ... + 1/Rn (for resistors between same nodes)
+## Theory:
 
-3. **Steps of the Algorithm**:
-   - Identifying series connections (nodes with degree 2)
-   - Identifying parallel connections (multiple edges between same nodes)
-   - Iteratively simplifying until only two nodes remain
-   - Returning the final resistance value
+### Lorentz Force:
+The force on a charged particle is:
+\( \mathbf{F} = q\mathbf{E} + q(\mathbf{v} \times \mathbf{B}) \)
+Where:
+- \( q \): Charge (Coulombs),
+- \( \mathbf{E} \): Electric field (N/C),
+- \( \mathbf{v} \): Velocity (m/s),
+- \( \mathbf{B} \): Magnetic field (Tesla),
+- \( m \): Mass (kg).
 
-## Implementation
+The acceleration is:
+\( \mathbf{a} = \frac{\mathbf{F}}{m} = \frac{q}{m}(\mathbf{E} + \mathbf{v} \times \mathbf{B}) \)
+
+### Key Phenomena:
+- **Circular Motion:** In a uniform \( \mathbf{B} \) field (\( \mathbf{E} = 0 \)), the particle moves in a circle perpendicular to \( \mathbf{B} \), with Larmor radius:
+  \( r_L = \frac{m v_\perp}{|q| B} \)
+- **Helical Motion:** A velocity component parallel to \( \mathbf{B} \) adds a linear motion, forming a helix.
+- **Drift Motion:** In crossed \( \mathbf{E} \) and \( \mathbf{B} \) fields, the particle drifts with velocity:
+  \( \mathbf{v}_d = \frac{\mathbf{E} \times \mathbf{B}}{B^2} \)
+
+## Exploration of Applications:
+1. **Particle Accelerators:** Magnetic fields guide particles in circular paths (e.g., cyclotrons), while electric fields boost their energy.
+2. **Mass Spectrometers:** The Lorentz force separates ions by mass-to-charge ratio via trajectory differences in \( \mathbf{B} \) fields.
+3. **Plasma Confinement:** Magnetic fields trap charged particles in fusion devices (e.g., tokamaks), preventing escape.
+
+- **Electric Fields (\( \mathbf{E} \)):** Accelerate particles, altering their speed and energy.
+- **Magnetic Fields (\( \mathbf{B} \)):** Deflect particles without energy change, controlling their paths.
+
+## Python Implementation:
 
 ```python
-# Starts here
-import networkx as nx
+import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
-class CircuitAnalyzer:
-    def __init__(self):
-        self.G = nx.MultiGraph()
-    
-    def add_resistor(self, node1, node2, resistance):
-        self.G.add_edge(node1, node2, weight=resistance)
-    
-    def reduce_series(self):
-        while True:
-            series_nodes = [n for n in self.G.nodes() if self.G.degree(n) == 2]
-            if not series_nodes:
-                break
-            node = series_nodes[0]
-            neighbors = list(self.G.neighbors(node))
-            if len(neighbors) != 2:
-                continue
-            n1, n2 = neighbors
-            r1 = self.G[n1][node][0]['weight']
-            r2 = self.G[node][n2][0]['weight']
-            self.G.add_edge(n1, n2, weight=r1 + r2)
-            self.G.remove_node(node)
-    
-    def reduce_parallel(self):
-        while True:
-            parallel_found = False
-            for n1 in self.G.nodes():
-                for n2 in self.G.nodes():
-                    if n1 >= n2:
-                        continue
-                    edges = self.G.get_edge_data(n1, n2)
-                    if edges and len(edges) > 1:
-                        parallel_found = True
-                        total_inv = sum(1/e['weight'] for e in edges.values())
-                        r_eq = 1/total_inv if total_inv != 0 else 0
-                        self.G.remove_edges_from([(n1, n2, k) for k in edges.keys()])
-                        self.G.add_edge(n1, n2, weight=r_eq)
-            if not parallel_found:
-                break
-    
-    def calculate_equivalent_resistance(self, start_node, end_node):
-        # Debugging print initial state
-        print(f"Initial nodes: {len(self.G.nodes())}, edges: {len(self.G.edges())}")
-        
-        while len(self.G.nodes()) > 2:
-            old_nodes = len(self.G.nodes())
-            self.reduce_series()
-            self.reduce_parallel()
-            new_nodes = len(self.G.nodes())
-            print(f"Nodes reduced from {old_nodes} to {new_nodes}")
-            if old_nodes == new_nodes:  # Here, no progress made yet
-                print("Reduction stalled")
-                break
-        
-        # Checking final state
-        edges = list(self.G.edges(data=True))
-        print(f"Final state - Nodes: {self.G.nodes()}, Edges: {edges}")
-        
-        if len(edges) == 1 and set(edges[0][:2]) == {start_node, end_node}:
-            return edges[0][2]['weight']
-        return None
+# Constants
+q = 1.6e-19  # Charge (C, e.g., proton)
+m = 1.67e-27 # Mass (kg, e.g., proton)
+dt = 1e-7    # Time step (s)
+steps = 10000 # Number of steps
 
-def draw_circuit(G, title):
-    pos = nx.spring_layout(G)
-    nx.draw(G, pos, with_labels=True)
-    edge_labels = nx.get_edge_attributes(G, 'weight')
-    nx.draw_networkx_edge_labels(G, pos, edge_labels)
-    plt.title(title)
+def lorentz_force(v, E, B):
+    """Compute acceleration due to Lorentz force."""
+    return (q / m) * (E + np.cross(v, B))
+
+def simulate_trajectory(E, B, v0, t_max=steps*dt):
+    """Simulate particle trajectory using Euler method."""
+    positions = [np.array([0.0, 0.0, 0.0])]
+    velocities = [v0]
+    t = 0
+    while t < t_max:
+        v = velocities[-1]
+        a = lorentz_force(v, E, B)
+        v_new = v + a * dt
+        r_new = positions[-1] + v_new * dt
+        velocities.append(v_new)
+        positions.append(r_new)
+        t += dt
+    return np.array(positions), np.array(velocities)
+
+# Field Configurations
+B_uniform = np.array([0, 0, 0.1])      # Uniform B along z (Tesla)
+E_zero = np.array([0, 0, 0])           # No E field
+E_uniform = np.array([1e5, 0, 0])      # Uniform E along x (N/C)
+E_crossed = np.array([1e5, 0, 0])      # E perpendicular to B
+v0 = np.array([1e3, 0, 1e2])          # Initial velocity (m/s)
+
+# Simulations
+pos_B, vel_B = simulate_trajectory(E_zero, B_uniform, v0)          # Uniform B
+pos_EB, vel_EB = simulate_trajectory(E_uniform, B_uniform, v0)    # Combined E and B
+pos_crossed, vel_crossed = simulate_trajectory(E_crossed, B_uniform, v0)  # Crossed fields
+
+# Visualization
+fig = plt.figure(figsize=(15, 5))
+
+# 1. Uniform Magnetic Field (2D)
+ax1 = fig.add_subplot(131)
+ax1.plot(pos_B[:, 0], pos_B[:, 1], label="Trajectory")
+ax1.set_title("Uniform B Field (xy-plane)")
+ax1.set_xlabel("x (m)")
+ax1.set_ylabel("y (m)")
+ax1.legend()
+ax1.grid(True)
+ax1.axis("equal")
+
+# 2. Combined E and B Fields (3D)
+ax2 = fig.add_subplot(132, projection="3d")
+ax2.plot(pos_EB[:, 0], pos_EB[:, 1], pos_EB[:, 2], label="Trajectory")
+ax2.set_title("Combined E and B Fields")
+ax2.set_xlabel("x (m)")
+ax2.set_ylabel("y (m)")
+ax2.set_zlabel("z (m)")
+ax2.legend()
+
+# 3. Crossed Fields (2D)
+ax3 = fig.add_subplot(133)
+ax3.plot(pos_crossed[:, 0], pos_crossed[:, 1], label="Trajectory")
+ax3.set_title("Crossed E and B Fields (xy-plane)")
+ax3.set_xlabel("x (m)")
+ax3.set_ylabel("y (m)")
+ax3.legend()
+ax3.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+# Parameter Exploration
+def explore_parameters():
+    # Vary initial velocity
+    v0_fast = np.array([2e3, 0, 1e2])
+    pos_fast, _ = simulate_trajectory(E_zero, B_uniform, v0_fast)
+    plt.figure()
+    plt.plot(pos_B[:, 0], pos_B[:, 1], label="v0 = 1e3 m/s")
+    plt.plot(pos_fast[:, 0], pos_fast[:, 1], label="v0 = 2e3 m/s")
+    plt.title("Effect of Initial Velocity (Uniform B)")
+    plt.xlabel("x (m)")
+    plt.ylabel("y (m)")
+    plt.legend()
+    plt.grid(True)
+    plt.axis("equal")
     plt.show()
 
-# Test cases starts here
-
-def test_circuits():
-    # Test 1: Simple Series
-    print("\nTest 1: Simple Series Circuit")
-    analyzer1 = CircuitAnalyzer()
-    analyzer1.add_resistor('A', 'B', 2)
-    analyzer1.add_resistor('B', 'C', 3)
-    analyzer1.add_resistor('C', 'D', 4)
-    draw_circuit(analyzer1.G, "Initial Series Circuit")
-    result1 = analyzer1.calculate_equivalent_resistance('A', 'D')
-    draw_circuit(analyzer1.G, "Final Series Circuit")
-    print(f"Series Result: {result1 if result1 is not None else 'Error'}Ω")
-
-    # Test 2: Simple Parallel
-    print("\nTest 2: Simple Parallel Circuit")
-    analyzer2 = CircuitAnalyzer()
-    analyzer2.add_resistor('A', 'B', 2)
-    analyzer2.add_resistor('A', 'B', 4)
-    draw_circuit(analyzer2.G, "Initial Parallel Circuit")
-    result2 = analyzer2.calculate_equivalent_resistance('A', 'B')
-    draw_circuit(analyzer2.G, "Final Parallel Circuit")
-    print(f"Parallel Result: {result2:.2f}Ω" if result2 is not None else "Parallel Result: Error")
-
-    # === Test 3: Complex Network ===
-    c3 = Circuit()
-    c3.add_resistor('A', 'B', 2)
-    c3.add_resistor('B', 'C', 3)
-    c3.add_resistor('C', 'E', 0)
-    c3.add_resistor('B', 'E', 6)
-    c3.add_resistor('A', 'D', 0)
-    c3.add_resistor('D', 'E', 4)
-
-    start_node = 'A'
-    end_node = 'C'
-
-    # Plot initial graph
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 10))
-    c3.draw("Initial Complex Circuit", ax1)
-    print(f"Initial nodes: {len(c3.G.nodes)}, edges: {len(c3.G.edges)}")
-
-    # Simplify and plot reduced graph
-    c3.simplify_zero_ohm_edges(start_node, end_node)
-    resistance, path = c3.total_resistance(start_node, end_node)
-    c3.draw("Reduced Complex Circuit", ax2)
-    plt.tight_layout()
-    plt.show()
+explore_parameters()
 ```
 
+# Visualizations
 
-# Visualizations with Test Cases
+## 1. Uniform Magnetic Field 
+- **Trajectory:** Circular motion in the xy-plane due to \( \mathbf{B} \) along z.
+- **Larmor Radius:** \( r_L = \frac{m v_\perp}{|q| B} \approx 0.0104 \, \text{m} \) (with \( v_\perp = 1e3 \, \text{m/s} \), \( B = 0.1 \, \text{T} \)).
+- **Plot:** Circular path in 2D.
+![Graphical Representation: Uniform Magnetic Field](../../_pics/UniformMagnetic2D.png)
+- **Explanation:** CA 2D plot in the xy-plane showing circular motion.
 
-### Test Case 1: Simple Series Circuit
-**Conditions:**
-- R1(2Ω) - R2(3Ω) - R3(4Ω)
-- Expected: 9Ω 
+## 2. Combined Electric and Magnetic Fields
+- **Trajectory:** Helical motion with drift along x due to \( \mathbf{E} \) in the x-direction.
+- **Phenomena:** Combines circular motion (from \( \mathbf{B} \)) and acceleration (from \( \mathbf{E} \)).
+- **Plot:** 3D helix with x-drift.
+![Graphical Representation: Combined Electric and Magnetic Fields](../../_pics/Combined3D.png)
+- **Explanation:** A 3D plot showing helical motion with drift.
 
-**Initial Series Circuit:**
-![Graphical Representation: Simple Series Circuit](../../_pics/Test1.1.png)
+## 3. Crossed Electric and Magnetic Fields
+- **Trajectory:** Cycloidal motion with drift in the y-direction (perpendicular to \( \mathbf{E} \) and \( \mathbf{B} \)).
+- **Drift Velocity:** \( v_d = \frac{E}{B} = \frac{1e5}{0.1} = 1e6 \, \text{m/s} \).
+- **Plot:** 2D xy-plane shows drift and oscillation.
+![Graphical Representation: Crossed Electric and Magnetic Fields](../../_pics/Crossed2D.png)
+- **Explanation:** A 2D plot in the xy-plane showing cycloidal motion with drift.
 
-**Final Series Circuit:**
-![Graphical Representation: Final Series Circuit](../../_pics/Test1.2.png)
-
-This test works correctly, producing 9Ω as we expected.
-
-
-### Test Case 2: Parellel Circuit
-**Conditions:**
-- R1(2Ω) || R2(4Ω)
-- Expected: 1.33Ω
-
-**Initial Parallel Circuit:**
-![Graphical Representation: Initial Parallel Circuit](../../_pics/Test2.1.png)
-
-**Reduced Parallel Circuit:**
-![Graphical Representation: Reduced Parallel Circuit](../../_pics/Test2.2.png)
-
-This test works correctly, producing 1.33Ω as we expected.
+## Parameter Exploration
+- **Initial Velocity:** Doubling \( v_\perp \) from 1e3 to 2e3 m/s doubles the Larmor radius, expanding the circular path (see second plot).
+![Graphical Representation: Parameter Exploration](../../_pics/Exploration2D.png)
+- **Explanation:** A 2D plot comparing trajectories for two different initial velocities in a uniform magnetic field.
 
 
-### Test Case 3: Complex Circuit
-**Conditions:**
-- A - R1(2Ω) - B - R2(3Ω) - C
-|            |
-R3(4Ω)      R4(6Ω)
-|            |
-D ----------- E
-
-**Initial Complex Circuit:**
-![Graphical Representation: Initial Complex Circuit](../../_pics/Test3.1.png)
-
-**Reduced Parallel Circuit:**
-![Graphical Representation: Reduced Complex Circuit](../../_pics/Test3.2.png)
-
-This test works correctly,  as we expected.
+# Discussions
+- **Cyclotrons:** The uniform \( \mathbf{B} \) case reflects cyclotron motion, where particles orbit at a fixed radius, with \( \mathbf{E} \) fields (not simulated dynamically here) providing acceleration.
+- **Magnetic Traps:** Helical paths in combined fields mimic particle confinement in magnetic bottles or tokamaks.
+- **Mass Spectrometers:** Crossed fields simulate velocity selectors, filtering particles by \( v_d \).
 
 
-# Detailed Explanation of the Equivalent Resistance Algorithm Using Graph Theory
-
-## Overview
-
-The algorithm calculates the equivalent resistance between two nodes in an electrical circuit by representing the circuit as a graph and iteratively simplifying it using series and parallel reduction rules. The circuit is modeled as a **multi-graph**, where:
-
-- **Nodes** represent junction points in the circuit.
-- **Edges** represent resistors, with the edge weight being the resistance value (in ohms, Ω).
-- Multiple edges between the same pair of nodes are allowed, representing resistors in parallel.
-
-The algorithm iteratively applies two fundamental electrical rules—series and parallel reductions—until the graph is reduced to a single edge between the start and end nodes, whose weight is the equivalent resistance. The implementation uses the `networkx` library in Python to handle graph operations and `matplotlib` for visualization.
-
-## Algorithm Steps
-
-The algorithm can be broken down into the following key steps:
-
-**Graph Representation**:
-   - The circuit is represented as a `nx.MultiGraph`, which allows multiple edges between the same pair of nodes (important for parallel resistors).
-   - Each edge has a `weight` attribute representing the resistance value.
-
-**Series Reduction**:
-   - Identify nodes with exactly two neighbors (degree 2), which indicate resistors in series.
-   - Combine the resistances of the two edges connected to this node by adding them.
-   - Remove the intermediate node and replace the two edges with a single edge whose weight is the sum of the resistances.
-
-**Parallel Reduction**:
-   - Identify pairs of nodes with multiple edges between them, indicating resistors in parallel.
-   - Compute the equivalent resistance using the parallel formula: \( \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \).
-   - Remove all parallel edges and add a single edge with the equivalent resistance.
-
-**Zero-Resistance Handling**:
-   - Identify edges with zero resistance (direct connections).
-   - Contract the nodes connected by zero-resistance edges into a single node, effectively merging them since they are at the same electrical potential.
-
-**Iterative Simplification**:
-   - Repeatedly apply series reduction, parallel reduction, and zero-resistance handling until no further simplifications are possible.
-   - A safeguard (maximum iteration limit) prevents infinite loops in case the graph cannot be reduced further.
-
-**Final Check**:
-   - Check if the final graph has a single edge between the specified start and end nodes.
-   - If so, return the weight of that edge as the equivalent resistance; otherwise, return `None` to indicate an error.
-
-
-
-# Analysis
-
-## How It Handles Complex Configurations
-
-- **Series Detection**: Identifies nodes with degree 2 and combines adjacent resistances
-- **Parallel Detection**: Finds multiple edges between nodes and applies parallel formula
-- **Iterative Simplification**: Repeatedly applies both reductions until circuit is fully simplified
-
-
-## Efficiency
-
-- **Time Complexity**: O(N * (E + V)) per iteration, where N is number of iterations
-- **Space Complexity**: O(V + E) for graph storage
-- **Note**: Number of iterations depends on circuit complexity
-
-
-## Potential Improvements
-
-- Adding delta-wye transformation for bridge circuits
-- Implementing matrix-based methods (Kirchhoff's laws) for more complex cases
-- Adding error checking for invalid configurations
-- Optimizing by prioritizing certain reductions based on circuit structure
-
+# Suggestions for Extension
+- **Non-Uniform Fields:** Model spatially varying \( \mathbf{E} \) or \( \mathbf{B} \) (e.g., magnetic gradients).
+- **Relativistic Effects:** Adjusting for high-speed particles using relativistic dynamics.
+- **Multiple Particles:** Simulating interactions for plasma studies.
+- **Interactive Plots:** Using Plotly for real-time parameter exploration.

@@ -169,6 +169,22 @@ This test works correctly, producing 9Ω as we expected.
 This test works correctly, producing 1.33Ω as we expected.
 
 
+### Test Case 3: Complex Circuit
+**Conditions:**
+- A - R1(2Ω) - B - R2(3Ω) - C
+|            |
+R3(4Ω)      R4(6Ω)
+|            |
+D ----------- E
+
+**Initial Complex Circuit:**
+![Graphical Representation: Initial Complex Circuit](../../_pics/Test3.1.png)
+
+**Reduced Parallel Circuit:**
+![Graphical Representation: Reduced Complex Circuit](../../_pics/Test3.2.png)
+
+This test works correctly,  as we expected.
+
 
 
 # Analysis

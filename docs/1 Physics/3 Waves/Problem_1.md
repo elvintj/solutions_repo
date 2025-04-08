@@ -195,3 +195,8 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
+
+# Visualization of the script
+
+- **Plot:** Interference Pattern:
+![Graphical Representation: Interference Pattern from Four Sources (Square)](../../_pics/Waves01.png)

@@ -139,6 +139,24 @@ if __name__ == "__main__":
 ```
 
 
+# Visualizations with Test Cases
+
+### Test Case 1: Simple Series Circuit
+**Conditions:**
+- R1(2Ω) - R2(3Ω) - R3(4Ω)
+- Expected: 9Ω 
+
+**Initial Series Circuit:**
+![Graphical Representation: Simple Series Circuit](../../_pics/Test1.1.png)
+
+**Final Series Circuit:**
+![Graphical Representation: Simple Series Circuit](../../_pics/Test1.2.png)
+
+This test works correctly, producing 9Ω as we expected.
+
+
+
+
 # Analysis
 
 ## How It Handles Complex Configurations
@@ -157,8 +175,8 @@ if __name__ == "__main__":
 
 ## Potential Improvements
 
-- Add delta-wye transformation for bridge circuits
-- Implement matrix-based methods (Kirchhoff's laws) for more complex cases
-- Add error checking for invalid configurations
-- Optimize by prioritizing certain reductions based on circuit structure
+- Adding delta-wye transformation for bridge circuits
+- Implementing matrix-based methods (Kirchhoff's laws) for more complex cases
+- Adding error checking for invalid configurations
+- Optimizing by prioritizing certain reductions based on circuit structure
 

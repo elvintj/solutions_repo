@@ -350,6 +350,59 @@ D ----------- E</p>
 <p><strong>Reduced Parallel Circuit:</strong>
 <img alt="Graphical Representation: Reduced Complex Circuit" src="../../../_pics/Test3.2.png"/></p>
 <p>This test works correctly,  as we expected.</p>
+<h1 id="detailed-explanation-of-the-equivalent-resistance-algorithm-using-graph-theory">Detailed Explanation of the Equivalent Resistance Algorithm Using Graph Theory</h1>
+<h2 id="overview">Overview</h2>
+<p>The algorithm calculates the equivalent resistance between two nodes in an electrical circuit by representing the circuit as a graph and iteratively simplifying it using series and parallel reduction rules. The circuit is modeled as a <strong>multi-graph</strong>, where:</p>
+<ul>
+<li><strong>Nodes</strong> represent junction points in the circuit.</li>
+<li><strong>Edges</strong> represent resistors, with the edge weight being the resistance value (in ohms, Ω).</li>
+<li>Multiple edges between the same pair of nodes are allowed, representing resistors in parallel.</li>
+</ul>
+<p>The algorithm iteratively applies two fundamental electrical rules—series and parallel reductions—until the graph is reduced to a single edge between the start and end nodes, whose weight is the equivalent resistance. The implementation uses the <code>networkx</code> library in Python to handle graph operations and <code>matplotlib</code> for visualization.</p>
+<h2 id="algorithm-steps">Algorithm Steps</h2>
+<p>The algorithm can be broken down into the following key steps:</p>
+<ol>
+<li><strong>Graph Representation</strong>:</li>
+<li>The circuit is represented as a <code>nx.MultiGraph</code>, which allows multiple edges between the same pair of nodes (important for parallel resistors).</li>
+<li>
+<p>Each edge has a <code>weight</code> attribute representing the resistance value.</p>
+</li>
+<li>
+<p><strong>Series Reduction</strong>:</p>
+</li>
+<li>Identify nodes with exactly two neighbors (degree 2), which indicate resistors in series.</li>
+<li>Combine the resistances of the two edges connected to this node by adding them.</li>
+<li>
+<p>Remove the intermediate node and replace the two edges with a single edge whose weight is the sum of the resistances.</p>
+</li>
+<li>
+<p><strong>Parallel Reduction</strong>:</p>
+</li>
+<li>Identify pairs of nodes with multiple edges between them, indicating resistors in parallel.</li>
+<li>Compute the equivalent resistance using the parallel formula: <span class="arithmatex">\( \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \)</span>.</li>
+<li>
+<p>Remove all parallel edges and add a single edge with the equivalent resistance.</p>
+</li>
+<li>
+<p><strong>Zero-Resistance Handling</strong>:</p>
+</li>
+<li>Identify edges with zero resistance (direct connections).</li>
+<li>
+<p>Contract the nodes connected by zero-resistance edges into a single node, effectively merging them since they are at the same electrical potential.</p>
+</li>
+<li>
+<p><strong>Iterative Simplification</strong>:</p>
+</li>
+<li>Repeatedly apply series reduction, parallel reduction, and zero-resistance handling until no further simplifications are possible.</li>
+<li>
+<p>A safeguard (maximum iteration limit) prevents infinite loops in case the graph cannot be reduced further.</p>
+</li>
+<li>
+<p><strong>Final Check</strong>:</p>
+</li>
+<li>Check if the final graph has a single edge between the specified start and end nodes.</li>
+<li>If so, return the weight of that edge as the equivalent resistance; otherwise, return <code>None</code> to indicate an error.</li>
+</ol>
 <h1 id="analysis">Analysis</h1>
 <h2 id="how-it-handles-complex-configurations">How It Handles Complex Configurations</h2>
 <ul>

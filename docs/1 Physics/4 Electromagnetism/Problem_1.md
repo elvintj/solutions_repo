@@ -29,33 +29,27 @@ import matplotlib.pyplot as plt
 
 class CircuitAnalyzer:
     def __init__(self):
-        self.G = nx.MultiGraph()  # This allows multiple edges between nodes
-
+        self.G = nx.MultiGraph()
+    
     def add_resistor(self, node1, node2, resistance):
         self.G.add_edge(node1, node2, weight=resistance)
     
     def reduce_series(self):
-        """Reduce series connections (nodes with degree 2)"""
         while True:
             series_nodes = [n for n in self.G.nodes() if self.G.degree(n) == 2]
             if not series_nodes:
                 break
-                
             node = series_nodes[0]
             neighbors = list(self.G.neighbors(node))
             if len(neighbors) != 2:
                 continue
-                
             n1, n2 = neighbors
             r1 = self.G[n1][node][0]['weight']
             r2 = self.G[node][n2][0]['weight']
-            
-            # Creating new edge with combined resistance
             self.G.add_edge(n1, n2, weight=r1 + r2)
             self.G.remove_node(node)
     
     def reduce_parallel(self):
-        """Reduce parallel connections (multiple edges between same nodes)"""
         while True:
             parallel_found = False
             for n1 in self.G.nodes():
@@ -65,27 +59,35 @@ class CircuitAnalyzer:
                     edges = self.G.get_edge_data(n1, n2)
                     if edges and len(edges) > 1:
                         parallel_found = True
-                        # Calculating parallel resistance
                         total_inv = sum(1/e['weight'] for e in edges.values())
                         r_eq = 1/total_inv if total_inv != 0 else 0
-                        
-                        # Removing all edges and add equivalent
                         self.G.remove_edges_from([(n1, n2, k) for k in edges.keys()])
                         self.G.add_edge(n1, n2, weight=r_eq)
             if not parallel_found:
                 break
     
     def calculate_equivalent_resistance(self, start_node, end_node):
-        """Calculate equivalent resistance between two nodes"""
+        # Debugging print initial state
+        print(f"Initial nodes: {len(self.G.nodes())}, edges: {len(self.G.edges())}")
+        
         while len(self.G.nodes()) > 2:
+            old_nodes = len(self.G.nodes())
             self.reduce_series()
             self.reduce_parallel()
+            new_nodes = len(self.G.nodes())
+            print(f"Nodes reduced from {old_nodes} to {new_nodes}")
+            if old_nodes == new_nodes:  # Here, no progress made yet
+                print("Reduction stalled")
+                break
         
-        if len(self.G.edges()) == 1:
-            return list(self.G.edges(data=True))[0][2]['weight']
+        # Checking final state
+        edges = list(self.G.edges(data=True))
+        print(f"Final state - Nodes: {self.G.nodes()}, Edges: {edges}")
+        
+        if len(edges) == 1 and set(edges[0][:2]) == {start_node, end_node}:
+            return edges[0][2]['weight']
         return None
 
-# This is the Function to visualize graph
 def draw_circuit(G, title):
     pos = nx.spring_layout(G)
     nx.draw(G, pos, with_labels=True)
@@ -93,6 +95,70 @@ def draw_circuit(G, title):
     nx.draw_networkx_edge_labels(G, pos, edge_labels)
     plt.title(title)
     plt.show()
+
+# Test cases starts here
+
+def test_circuits():
+    # Test 1: Simple Series
+    print("\nTest 1: Simple Series Circuit")
+    analyzer1 = CircuitAnalyzer()
+    analyzer1.add_resistor('A', 'B', 2)
+    analyzer1.add_resistor('B', 'C', 3)
+    analyzer1.add_resistor('C', 'D', 4)
+    draw_circuit(analyzer1.G, "Initial Series Circuit")
+    result1 = analyzer1.calculate_equivalent_resistance('A', 'D')
+    draw_circuit(analyzer1.G, "Final Series Circuit")
+    print(f"Series Result: {result1 if result1 is not None else 'Error'}Ω")
+
+    # Test 2: Simple Parallel
+    print("\nTest 2: Simple Parallel Circuit")
+    analyzer2 = CircuitAnalyzer()
+    analyzer2.add_resistor('A', 'B', 2)
+    analyzer2.add_resistor('A', 'B', 4)
+    draw_circuit(analyzer2.G, "Initial Parallel Circuit")
+    result2 = analyzer2.calculate_equivalent_resistance('A', 'B')
+    draw_circuit(analyzer2.G, "Final Parallel Circuit")
+    print(f"Parallel Result: {result2:.2f}Ω" if result2 is not None else "Parallel Result: Error")
+
+    # Test 3: Complex Circuit
+    print("\nTest 3: Complex Circuit")
+    analyzer3 = CircuitAnalyzer()
+    analyzer3.add_resistor('A', 'B', 2)
+    analyzer3.add_resistor('B', 'C', 3)
+    analyzer3.add_resistor('A', 'D', 4)
+    analyzer3.add_resistor('B', 'E', 6)
+    analyzer3.add_resistor('D', 'E', 0)
+    analyzer3.add_resistor('C', 'E', 0)
+    draw_circuit(analyzer3.G, "Initial Complex Circuit")
+    result3 = analyzer3.calculate_equivalent_resistance('A', 'C')
+    draw_circuit(analyzer3.G, "Final Complex Circuit")
+    print(f"Complex Result: {result3:.2f}Ω" if result3 is not None else "Complex Result: Error")
+
+if __name__ == "__main__":
+    test_circuits()
 ```
 
+
+# Analysis
+
+## How It Handles Complex Configurations
+
+- **Series Detection**: Identifies nodes with degree 2 and combines adjacent resistances
+- **Parallel Detection**: Finds multiple edges between nodes and applies parallel formula
+- **Iterative Simplification**: Repeatedly applies both reductions until circuit is fully simplified
+
+
+## Efficiency
+
+- **Time Complexity**: O(N * (E + V)) per iteration, where N is number of iterations
+- **Space Complexity**: O(V + E) for graph storage
+- **Note**: Number of iterations depends on circuit complexity
+
+
+## Potential Improvements
+
+- Add delta-wye transformation for bridge circuits
+- Implement matrix-based methods (Kirchhoff's laws) for more complex cases
+- Add error checking for invalid configurations
+- Optimize by prioritizing certain reductions based on circuit structure
 

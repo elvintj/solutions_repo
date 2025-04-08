@@ -489,6 +489,33 @@ plt.legend()
 plt.grid(True)
 plt.show()
 </code></pre>
+<h1 id="visualization-of-the-script_1">Visualization of the script</h1>
+<ul>
+<li><strong>Plot:</strong> Interference Pattern:
+<img alt="Graphical Representation: Interference Pattern from Four Sources (Square)" src="../../../_pics/Waves02.png"/></li>
+</ul>
+<h2 id="explanation-of-the-code_1">Explanation of the Code</h2>
+<ul>
+<li><strong>Parameters</strong>: We define the amplitude <span class="arithmatex">\(A\)</span>, wavelength <span class="arithmatex">\(\lambda\)</span>, wave number <span class="arithmatex">\(k\)</span>, and time <span class="arithmatex">\(t\)</span>.</li>
+<li><strong>Sources</strong>: The positions of the three sources are defined as the vertices of the equilateral triangle, calculated using the circumradius <span class="arithmatex">\(R\)</span>.</li>
+<li><strong>Grid</strong>: A 2D grid of points <span class="arithmatex">\((x, y)\)</span> is created using <code>np.meshgrid</code> over the range <span class="arithmatex">\([-5, 5] \times [-5, 5]\)</span>.</li>
+<li><strong>Displacement Calculation</strong>: For each source, we compute the distance <span class="arithmatex">\(r_i\)</span> to every point on the grid, then add the wave contribution <span class="arithmatex">\(\frac{A}{\sqrt{r_i}} \cos(k r_i)\)</span> to the total displacement.</li>
+<li><strong>Visualization</strong>: The total displacement is plotted as a heatmap using <code>plt.contourf</code>. The <code>seismic</code> colormap highlights positive (red) and negative (blue) displacements, making it easy to see constructive and destructive interference. The sources are marked with black dots.</li>
+</ul>
+<hr/>
+<h2 id="step-7-interpretation-of-results_1">Step 7: Interpretation of Results</h2>
+<p>When you run the script, you’ll see a heatmap showing the interference pattern. Here’s what to look for:</p>
+<ul>
+<li><strong>Constructive Interference</strong>: Regions where the displacement is large (bright red or blue) indicate constructive interference, where the waves from multiple sources add up in phase.</li>
+<li><strong>Destructive Interference</strong>: Regions where the displacement is near zero (white) indicate destructive interference, where the waves cancel each other out.</li>
+<li><strong>Symmetry</strong>: Since the sources are at the vertices of an equilateral triangle, the interference pattern will exhibit three-fold symmetry. You’ll notice repeating patterns along the directions of the triangle’s axes of symmetry (at <span class="arithmatex">\(0^\circ\)</span>, <span class="arithmatex">\(120^\circ\)</span>, and <span class="arithmatex">\(240^\circ\)</span>).</li>
+</ul>
+<h3 id="observations_1">Observations:</h3>
+<ul>
+<li>Near the sources, the waves are strong (large displacement) because of the <span class="arithmatex">\(1/\sqrt{r}\)</span> term.</li>
+<li>Along the lines connecting pairs of sources (e.g., from <span class="arithmatex">\((R, 0)\)</span> to <span class="arithmatex">\(\left(-\frac{R}{2}, R \frac{\sqrt{3}}{2}\right)\)</span>), you’ll see alternating regions of constructive and destructive interference due to the changing path difference.</li>
+<li>At the center <span class="arithmatex">\((0, 0)\)</span>, the distances from all three sources are equal (<span class="arithmatex">\(r = R = \frac{2}{\sqrt{3}}\)</span>), so the waves arrive with the same phase, leading to constructive interference.</li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

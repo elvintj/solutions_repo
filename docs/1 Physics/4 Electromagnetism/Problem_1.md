@@ -120,22 +120,29 @@ def test_circuits():
     draw_circuit(analyzer2.G, "Final Parallel Circuit")
     print(f"Parallel Result: {result2:.2f}Ω" if result2 is not None else "Parallel Result: Error")
 
-    # Test 3: Complex Circuit
-    print("\nTest 3: Complex Circuit")
-    analyzer3 = CircuitAnalyzer()
-    analyzer3.add_resistor('A', 'B', 2)
-    analyzer3.add_resistor('B', 'C', 3)
-    analyzer3.add_resistor('A', 'D', 4)
-    analyzer3.add_resistor('B', 'E', 6)
-    analyzer3.add_resistor('D', 'E', 0)
-    analyzer3.add_resistor('C', 'E', 0)
-    draw_circuit(analyzer3.G, "Initial Complex Circuit")
-    result3 = analyzer3.calculate_equivalent_resistance('A', 'C')
-    draw_circuit(analyzer3.G, "Final Complex Circuit")
-    print(f"Complex Result: {result3:.2f}Ω" if result3 is not None else "Complex Result: Error")
+    # === Test 3: Complex Network ===
+    c3 = Circuit()
+    c3.add_resistor('A', 'B', 2)
+    c3.add_resistor('B', 'C', 3)
+    c3.add_resistor('C', 'E', 0)
+    c3.add_resistor('B', 'E', 6)
+    c3.add_resistor('A', 'D', 0)
+    c3.add_resistor('D', 'E', 4)
 
-if __name__ == "__main__":
-    test_circuits()
+    start_node = 'A'
+    end_node = 'C'
+
+    # Plot initial graph
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 10))
+    c3.draw("Initial Complex Circuit", ax1)
+    print(f"Initial nodes: {len(c3.G.nodes)}, edges: {len(c3.G.edges)}")
+
+    # Simplify and plot reduced graph
+    c3.simplify_zero_ohm_edges(start_node, end_node)
+    resistance, path = c3.total_resistance(start_node, end_node)
+    c3.draw("Reduced Complex Circuit", ax2)
+    plt.tight_layout()
+    plt.show()
 ```
 
 

@@ -398,4 +398,31 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
+# Visualization of the script
 
+- **Plot:** Interference Pattern:
+![Graphical Representation: Interference Pattern from Four Sources (Square)](../../_pics/Waves02.png)
+
+## Explanation of the Code
+
+- **Parameters**: We define the amplitude \(A\), wavelength \(\lambda\), wave number \(k\), and time \(t\).
+- **Sources**: The positions of the three sources are defined as the vertices of the equilateral triangle, calculated using the circumradius \(R\).
+- **Grid**: A 2D grid of points \((x, y)\) is created using `np.meshgrid` over the range \([-5, 5] \times [-5, 5]\).
+- **Displacement Calculation**: For each source, we compute the distance \(r_i\) to every point on the grid, then add the wave contribution \(\frac{A}{\sqrt{r_i}} \cos(k r_i)\) to the total displacement.
+- **Visualization**: The total displacement is plotted as a heatmap using `plt.contourf`. The `seismic` colormap highlights positive (red) and negative (blue) displacements, making it easy to see constructive and destructive interference. The sources are marked with black dots.
+
+---
+
+## Step 7: Interpretation of Results
+
+When you run the script, you’ll see a heatmap showing the interference pattern. Here’s what to look for:
+
+- **Constructive Interference**: Regions where the displacement is large (bright red or blue) indicate constructive interference, where the waves from multiple sources add up in phase.
+- **Destructive Interference**: Regions where the displacement is near zero (white) indicate destructive interference, where the waves cancel each other out.
+- **Symmetry**: Since the sources are at the vertices of an equilateral triangle, the interference pattern will exhibit three-fold symmetry. You’ll notice repeating patterns along the directions of the triangle’s axes of symmetry (at \(0^\circ\), \(120^\circ\), and \(240^\circ\)).
+
+### Observations:
+
+- Near the sources, the waves are strong (large displacement) because of the \(1/\sqrt{r}\) term.
+- Along the lines connecting pairs of sources (e.g., from \((R, 0)\) to \(\left(-\frac{R}{2}, R \frac{\sqrt{3}}{2}\right)\)), you’ll see alternating regions of constructive and destructive interference due to the changing path difference.
+- At the center \((0, 0)\), the distances from all three sources are equal (\(r = R = \frac{2}{\sqrt{3}}\)), so the waves arrive with the same phase, leading to constructive interference.

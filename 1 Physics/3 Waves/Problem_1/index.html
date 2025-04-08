@@ -196,6 +196,7 @@
 <li>Visualizing the patterns graphically.</li>
 </ol>
 <hr/>
+<h1 id="variant-a-square-as-a-regular-polygon">Variant A - Square as a Regular Polygon</h1>
 <h2 id="step-1-select-a-regular-polygon">Step 1: Select a Regular Polygon</h2>
 <p>Let’s choose a <strong>square</strong> as our regular polygon. A square has 4 vertices, so we will have <span class="arithmatex">\(N = 4\)</span> point sources. We’ll place the square in the <span class="arithmatex">\(xy\)</span>-plane, centered at the origin <span class="arithmatex">\((0, 0)\)</span>, with a side length of <span class="arithmatex">\(2a\)</span>. For simplicity, let’s set <span class="arithmatex">\(a = 1\)</span>, so the side length is 2 units.</p>
 <p>The vertices of the square are:</p>
@@ -332,6 +333,162 @@ plt.show()
 <li><strong>Plot:</strong> Interference Pattern:
 <img alt="Graphical Representation: Interference Pattern from Four Sources (Square)" src="../../../_pics/Waves01.png"/></li>
 </ul>
+<h2 id="explanation-of-the-code">Explanation of the Code</h2>
+<ul>
+<li><strong>Parameters</strong>: We define the amplitude <span class="arithmatex">\(A\)</span>, wavelength <span class="arithmatex">\(\lambda\)</span>, wave number <span class="arithmatex">\(k\)</span>, and time <span class="arithmatex">\(t\)</span>.</li>
+<li><strong>Sources</strong>: The positions of the four sources are defined as the vertices of the square.</li>
+<li><strong>Grid</strong>: A 2D grid of points <span class="arithmatex">\((x, y)\)</span> is created using <code>np.meshgrid</code> over the range <span class="arithmatex">\([-5, 5] \times [-5, 5]\)</span>.</li>
+<li><strong>Displacement Calculation</strong>: For each source, we compute the distance <span class="arithmatex">\(r_i\)</span> to every point on the grid, then add the wave contribution <span class="arithmatex">\(\frac{A}{\sqrt{r_i}} \cos(k r_i)\)</span> to the total displacement.</li>
+<li><strong>Visualization</strong>: The total displacement is plotted as a heatmap using <code>plt.contourf</code>. The <code>seismic</code> colormap highlights positive (red) and negative (blue) displacements, making it easy to see constructive and destructive interference. The sources are marked with black dots.</li>
+</ul>
+<hr/>
+<h2 id="step-7-interpretation-of-results">Step 7: Interpretation of Results</h2>
+<p>When you run the script, you’ll see a heatmap showing the interference pattern. Here’s what to look for:</p>
+<ul>
+<li><strong>Constructive Interference</strong>: Regions where the displacement is large (bright red or blue) indicate constructive interference, where the waves from multiple sources add up in phase.</li>
+<li><strong>Destructive Interference</strong>: Regions where the displacement is near zero (white) indicate destructive interference, where the waves cancel each other out.</li>
+<li><strong>Symmetry</strong>: Since the sources are at the vertices of a square, the interference pattern will exhibit four-fold symmetry. You’ll notice repeating patterns along the axes and diagonals.</li>
+</ul>
+<h3 id="observations">Observations:</h3>
+<ul>
+<li>Near the sources, the waves are strong (large displacement) because of the <span class="arithmatex">\(1/\sqrt{r}\)</span> term.</li>
+<li>Along the lines connecting pairs of sources (e.g., <span class="arithmatex">\((1, 1)\)</span> to <span class="arithmatex">\((1, -1)\)</span>), you’ll see alternating regions of constructive and destructive interference due to the changing path difference.</li>
+<li>At the center <span class="arithmatex">\((0, 0)\)</span>, the distances from all four sources are equal (<span class="arithmatex">\(r = \sqrt{2}\)</span>), so the waves arrive with the same phase, leading to constructive interference.</li>
+</ul>
+<h1 id="variant-b-equilateral-triangle-as-a-regular-polygon">Variant B - Equilateral Triangle as a Regular Polygon</h1>
+<h2 id="step-1-select-a-regular-polygon_1">Step 1: Select a Regular Polygon</h2>
+<p>Let’s choose an <strong>equilateral triangle</strong> as our regular polygon. An equilateral triangle has 3 vertices, so we will have <span class="arithmatex">\(N = 3\)</span> point sources. We’ll place the triangle in the <span class="arithmatex">\(xy\)</span>-plane, centered at the origin <span class="arithmatex">\((0, 0)\)</span>, with a side length of <span class="arithmatex">\(s\)</span>. For simplicity, let’s set <span class="arithmatex">\(s = 2\)</span>.</p>
+<p>To find the coordinates of the vertices of an equilateral triangle centered at the origin:</p>
+<ul>
+<li>The distance from the center to each vertex (circumradius) of an equilateral triangle with side length <span class="arithmatex">\(s\)</span> is given by <span class="arithmatex">\(R = \frac{s}{\sqrt{3}}\)</span>.</li>
+<li>For <span class="arithmatex">\(s = 2\)</span>, the circumradius is <span class="arithmatex">\(R = \frac{2}{\sqrt{3}} \approx 1.1547\)</span>.</li>
+</ul>
+<p>The vertices of the equilateral triangle, with the first vertex at angle <span class="arithmatex">\(0^\circ\)</span> (along the positive <span class="arithmatex">\(x\)</span>-axis), are:</p>
+<ul>
+<li>Vertex 1: <span class="arithmatex">\((R, 0) = \left(\frac{2}{\sqrt{3}}, 0\right) \approx (1.1547, 0)\)</span>,</li>
+<li>Vertex 2: <span class="arithmatex">\((R \cos 120^\circ, R \sin 120^\circ) = \left(-\frac{R}{2}, R \frac{\sqrt{3}}{2}\right) = \left(-\frac{1}{\sqrt{3}}, \frac{\sqrt{3}}{\sqrt{3}}\right) = \left(-\frac{1}{\sqrt{3}}, 1\right) \approx (-0.5774, 1)\)</span>,</li>
+<li>Vertex 3: <span class="arithmatex">\((R \cos 240^\circ, R \sin 240^\circ) = \left(-\frac{R}{2}, -R \frac{\sqrt{3}}{2}\right) = \left(-\frac{1}{\sqrt{3}}, -1\right) \approx (-0.5774, -1)\)</span>.</li>
+</ul>
+<p>Each vertex will be a point source emitting circular waves.</p>
+<hr/>
+<h2 id="step-2-position-the-sources_1">Step 2: Position the Sources</h2>
+<p>The positions of the sources are:</p>
+<ul>
+<li>Source 1: <span class="arithmatex">\((x_1, y_1) = \left(\frac{2}{\sqrt{3}}, 0\right) \approx (1.1547, 0)\)</span>,</li>
+<li>Source 2: <span class="arithmatex">\((x_2, y_2) = \left(-\frac{1}{\sqrt{3}}, 1\right) \approx (-0.5774, 1)\)</span>,</li>
+<li>Source 3: <span class="arithmatex">\((x_3, y_3) = \left(-\frac{1}{\sqrt{3}}, -1\right) \approx (-0.5774, -1)\)</span>.</li>
+</ul>
+<hr/>
+<h2 id="step-3-wave-equations_1">Step 3: Wave Equations</h2>
+<p>Each source emits a wave of the form:</p>
+<div class="arithmatex">\[
+\eta_i(x, y, t) = \frac{A}{\sqrt{r_i}} \cdot \cos(k r_i - \omega t + \phi_i)
+\]</div>
+<p>where <span class="arithmatex">\(r_i = \sqrt{(x - x_i)^2 + (y - y_i)^2}\)</span> is the distance from the <span class="arithmatex">\(i\)</span>-th source to the point <span class="arithmatex">\((x, y)\)</span>.</p>
+<h3 id="assumptions_1">Assumptions:</h3>
+<ul>
+<li>All sources have the same amplitude <span class="arithmatex">\(A\)</span>.</li>
+<li>All sources have the same wavelength <span class="arithmatex">\(\lambda\)</span> and frequency <span class="arithmatex">\(f\)</span>, so <span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> and <span class="arithmatex">\(\omega = 2\pi f\)</span> are the same for all sources.</li>
+<li>The waves are coherent, meaning the phase difference between sources is constant. For simplicity, let’s assume the initial phase <span class="arithmatex">\(\phi_i = 0\)</span> for all sources (i.e., all sources are in phase).</li>
+</ul>
+<p>Let’s set the same numerical values for the parameters as before:</p>
+<ul>
+<li>Amplitude <span class="arithmatex">\(A = 1\)</span>,</li>
+<li>Wavelength <span class="arithmatex">\(\lambda = 1\)</span>, so <span class="arithmatex">\(k = \frac{2\pi}{\lambda} = 2\pi\)</span>,</li>
+<li>Frequency <span class="arithmatex">\(f = 1\)</span>, so <span class="arithmatex">\(\omega = 2\pi f = 2\pi\)</span>,</li>
+<li>Initial phase <span class="arithmatex">\(\phi_i = 0\)</span>.</li>
+</ul>
+<p>Thus, the wave equation for the <span class="arithmatex">\(i\)</span>-th source becomes:</p>
+<div class="arithmatex">\[
+\eta_i(x, y, t) = \frac{1}{\sqrt{r_i}} \cdot \cos(2\pi r_i - 2\pi t)
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(r_1 = \sqrt{\left(x - \frac{2}{\sqrt{3}}\right)^2 + (y - 0)^2}\)</span>,</li>
+<li><span class="arithmatex">\(r_2 = \sqrt{\left(x + \frac{1}{\sqrt{3}}\right)^2 + (y - 1)^2}\)</span>,</li>
+<li><span class="arithmatex">\(r_3 = \sqrt{\left(x + \frac{1}{\sqrt{3}}\right)^2 + (y + 1)^2}\)</span>.</li>
+</ul>
+<hr/>
+<h2 id="step-4-superposition-of-waves_1">Step 4: Superposition of Waves</h2>
+<p>The total displacement at a point <span class="arithmatex">\((x, y)\)</span> at time <span class="arithmatex">\(t\)</span> is the sum of the displacements from all sources:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \sum_{i=1}^{N} \eta_i(x, y, t)
+\]</div>
+<p>For our equilateral triangle with 3 sources:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \eta_1 + \eta_2 + \eta_3
+\]</div>
+<div class="arithmatex">\[
+\eta(x, y, t) = \sum_{i=1}^{3} \frac{1}{\sqrt{r_i}} \cdot \cos(2\pi r_i - 2\pi t)
+\]</div>
+<hr/>
+<h2 id="step-5-analyze-interference-patterns_1">Step 5: Analyze Interference Patterns</h2>
+<p>To analyze the interference patterns, we compute <span class="arithmatex">\(\eta(x, y, t)\)</span> over a grid of points <span class="arithmatex">\((x, y)\)</span> at a specific time <span class="arithmatex">\(t\)</span>. Let’s fix <span class="arithmatex">\(t = 0\)</span> for simplicity, so the equation becomes:</p>
+<div class="arithmatex">\[
+\eta(x, y, 0) = \sum_{i=1}^{3} \frac{1}{\sqrt{r_i}} \cdot \cos(2\pi r_i)
+\]</div>
+<h3 id="constructive-interference_1">Constructive Interference:</h3>
+<p>Constructive interference occurs when the waves from different sources are in phase, i.e., when the phase difference <span class="arithmatex">\(k(r_i - r_j)\)</span> between any two sources is an integer multiple of <span class="arithmatex">\(2\pi\)</span>:</p>
+<div class="arithmatex">\[
+|r_i - r_j| = m \lambda \quad (m = 0, 1, 2, \dots)
+\]</div>
+<p>Since <span class="arithmatex">\(\lambda = 1\)</span>, constructive interference occurs when the path difference <span class="arithmatex">\(|r_i - r_j|\)</span> is an integer.</p>
+<h3 id="destructive-interference_1">Destructive Interference:</h3>
+<p>Destructive interference occurs when the waves are out of phase by <span class="arithmatex">\(\pi\)</span> radians, i.e., when:</p>
+<div class="arithmatex">\[
+|r_i - r_j| = \left(m + \frac{1}{2}\right) \lambda \quad (m = 0, 1, 2, \dots)
+\]</div>
+<p>For <span class="arithmatex">\(\lambda = 1\)</span>, this happens when the path difference is a half-integer (e.g., 0.5, 1.5, 2.5, ...).</p>
+<p>We’ll visualize the total displacement <span class="arithmatex">\(\eta(x, y, 0)\)</span> to identify these regions.</p>
+<hr/>
+<h2 id="step-6-visualization_1">Step 6: Visualization</h2>
+<p>Below is a Python script that computes and visualizes the interference pattern using NumPy and Matplotlib. The script creates a 2D grid of points, calculates the total displacement, and plots the result as a heatmap.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters
+A = 1.0  # Amplitude
+lambda_ = 1.0  # Wavelength
+k = 2 * np.pi / lambda_  # Wave number
+t = 0.0  # Time (fixed at t=0 for visualization)
+
+# Define the positions of the sources (vertices of an equilateral triangle)
+R = 2 / np.sqrt(3)  # Circumradius of the triangle with side length 2
+sources = [
+    (R, 0),               # Source 1
+    (-R/2, R * np.sqrt(3)/2),  # Source 2
+    (-R/2, -R * np.sqrt(3)/2)  # Source 3
+]
+
+# Create a grid of points
+x = np.linspace(-5, 5, 100)  # x-range
+y = np.linspace(-5, 5, 100)  # y-range
+X, Y = np.meshgrid(x, y)
+
+# Initialize the total displacement
+eta = np.zeros_like(X)
+
+# Sum the contributions from each source
+for (x0, y0) in sources:
+    # Distance from the source to each point on the grid
+    r = np.sqrt((X - x0)**2 + (Y - y0)**2)
+    # Avoid division by zero at the source
+    r = np.where(r &lt; 1e-6, 1e-6, r)
+    # Wave contribution from this source
+    eta += (A / np.sqrt(r)) * np.cos(k * r)
+
+# Plot the interference pattern
+plt.figure(figsize=(8, 8))
+plt.contourf(X, Y, eta, cmap='seismic', levels=50)
+plt.colorbar(label='Displacement')
+plt.scatter([s[0] for s in sources], [s[1] for s in sources], c='black', marker='o', label='Sources')
+plt.title('Interference Pattern from Three Sources (Equilateral Triangle)')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.grid(True)
+plt.show()
+</code></pre>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

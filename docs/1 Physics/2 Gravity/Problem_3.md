@@ -35,9 +35,15 @@ $$
   3. **Harmonic Law:** The square of the orbital period of a planet is proportional to the cube of the semi-major axis of its orbit.
 
 ### Trajectory Types:
-- **Parabolic Trajectory:** An object that has exactly the escape velocity will follow a parabolic trajectory.
-- **Elliptical Trajectory:** An object in orbit will follow an elliptical path, which can be bound or unbound depending on the velocity and altitude.
-- **Hyperbolic Trajectory:** If the object has more than the escape velocity, it will follow a hyperbolic trajectory and escape Earth’s gravity.
+- **Parabolic Trajectory:** 
+      An object that has exactly the escape velocity will follow a parabolic trajectory.
+
+- **Elliptical Trajectory:** 
+      An object in orbit will follow an elliptical path, which can be bound or unbound depending on the velocity and altitude.
+
+- **Hyperbolic Trajectory:** 
+      If the object has more than the escape velocity, it will follow a hyperbolic trajectory and escape Earth’s gravity.
+      
 
 ### Escape Velocity:
 The escape velocity \( v_e \) is the minimum velocity needed for an object to escape Earth's gravitational influence, calculated as:
@@ -50,7 +56,8 @@ Where:
 -  \( v_e \) is the escape velocity,
 - \( r \) is the distance from the center of the Earth.
 
-## Python Code: Numerical Simulation
+# Implementation
+## Python Script: Numerical Simulation
 
 ```python
 import numpy as np

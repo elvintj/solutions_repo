@@ -63,6 +63,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#derivation-of-keplers-third-law">Derivation of Kepler's Third Law</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#implementation">Implementation</a>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -211,47 +215,54 @@
 <p>This final equation confirms the fundamental relationship:</p>
 <div class="arithmatex">\[ T^2 \propto r^3 \]</div>
 <p>This result means that if you plot <span class="arithmatex">\( T^2 \)</span> versus <span class="arithmatex">\( r^3 \)</span> for any orbiting object, the graph will produce a straight line, and the proportionality constant depends on the mass of the central body.</p>
-<h1 id="parameters">Parameters</h1>
-<p>M = 5.972e24  # Mass of Earth (kg)
-radii = np.linspace(1e7, 5e7, 100)  # Orbital radii in meters
-T_values = orbital_period(radii, M)</p>
-<h1 id="squaring-period-and-cubing-radius">Squaring period and cubing radius</h1>
-<p>T_squared = T_values<strong>2
-r_cubed = radii</strong>3</p>
-<h1 id="plot-results">Plot results</h1>
-<p>plt.figure(figsize=(8, 5))
-plt.plot(r_cubed, T_squared, label='T^2 vs r^3')
-plt.xlabel("Orbital Radius Cubed (m³)")
-plt.ylabel("Orbital Period Squared (s²)")
-plt.title("Verification of Kepler's Third Law")
-plt.legend()
-plt.grid()
-plt.show()</p>
 <h3 id="implementation">Implementation</h3>
 <p>A Python script can be used to verify this relationship by simulating circular orbits and plotting <span class="arithmatex">\( T^2 \)</span> vs. <span class="arithmatex">\( r^3 \)</span>.</p>
-<p>python
-import numpy as np
-import matplotlib.pyplot as plt</p>
-<p>def orbital_period(radius, M, G=6.674e-11):
-    return 2 * np.pi * np.sqrt(radius**3 / (G * M))</p>
-<h1 id="parameters_1">Parameters</h1>
-<p>M = 5.972e24  # Mass of Earth (kg)
+<pre><code class="language-python"># Parameters
+M = 5.972e24  # Mass of Earth (kg)
 radii = np.linspace(1e7, 5e7, 100)  # Orbital radii in meters
-T_values = orbital_period(radii, M)</p>
-<h1 id="squaring-period-and-cubing-radius_1">Squaring period and cubing radius</h1>
-<p>T_squared = T_values<strong>2
-r_cubed = radii</strong>3</p>
-<h1 id="plot-results_1">Plot results</h1>
-<p>plt.figure(figsize=(8, 5))
+T_values = orbital_period(radii, M)
+
+# Squaring period and cubing radius
+T_squared = T_values**2
+r_cubed = radii**3
+
+# Plot results
+plt.figure(figsize=(8, 5))
 plt.plot(r_cubed, T_squared, label='T^2 vs r^3')
 plt.xlabel("Orbital Radius Cubed (m³)")
 plt.ylabel("Orbital Period Squared (s²)")
 plt.title("Verification of Kepler's Third Law")
 plt.legend()
 plt.grid()
-plt.show()</p>
-<p>```
-<em>Graphical verification of Kepler's Third Law</em></p>
+plt.show()
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def orbital_period(radius, M, G=6.674e-11):
+    return 2 * np.pi * np.sqrt(radius**3 / (G * M))
+
+# Parameters
+M = 5.972e24  # Mass of Earth (kg)
+radii = np.linspace(1e7, 5e7, 100)  # Orbital radii in meters
+T_values = orbital_period(radii, M)
+
+# Squaring period and cubing radius
+T_squared = T_values**2
+r_cubed = radii**3
+
+# Plot results
+plt.figure(figsize=(8, 5))
+plt.plot(r_cubed, T_squared, label='T^2 vs r^3')
+plt.xlabel("Orbital Radius Cubed (m³)")
+plt.ylabel("Orbital Period Squared (s²)")
+plt.title("Verification of Kepler's Third Law")
+plt.legend()
+plt.grid()
+plt.show()
+</code></pre>
+<p><em>Graphical verification of Kepler's Third Law</em></p>
 <p><img alt="Kepler's Third Law" src="../../../_pics/Graph3.png"/></p>
 </div>
 </div><footer>

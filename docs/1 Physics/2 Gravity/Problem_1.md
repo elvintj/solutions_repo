@@ -5,55 +5,55 @@
 ### Introduction
 Kepler's Third Law states that the square of the orbital period (T) of a planet is proportional to the cube of its orbital radius (r). This relationship is fundamental in celestial mechanics and allows astronomers to determine planetary motions, calculate masses of celestial bodies, and estimate distances in space. The law is derived from Newton's Law of Gravitation and is widely applicable to satellites, planetary systems, and even galaxies.
 
-### Theory
-For a body in a circular orbit around a massive central object, the gravitational force provides the necessary centripetal force:
+## Derivation of Kepler's Third Law
+For a body in a circular orbit around a central mass \( M \), the gravitational force (\( F_g \)) provides the necessary centripetal force (\( F_c \)) to maintain the orbit:
 
-$$
-F_g = F_c
-$$
+•⁠  ⁠The gravitational force is given by:
 
-Using Newton’s Law of Gravitation:
+  $$ F_g = \frac{G M m}{r^2} $$
 
-$$
-\frac{G M m}{r^2} = \frac{m v^2}{r}
-$$
+  where:
+  - \( G \) is the gravitational constant,
+  - \( M \) is the mass of the central body,
+  - \( m \) is the mass of the orbiting object,
+  - \( r \) is the orbital radius.
 
-where:
-•⁠  ⁠\( G \) is the gravitational constant \( (6.674 \times 10^{-11} \text{ m}^3 \text{kg}^{-1} \text{s}^{-2}) \),
-•⁠  ⁠\( M \) is the mass of the central object,
-•⁠  ⁠\( m \) is the mass of the orbiting body,
-•⁠  ⁠\( r \) is the orbital radius,
-•⁠  ⁠\( v \) is the orbital velocity.
+•⁠  ⁠The centripetal force required to maintain the orbit is given by:
 
-Since the velocity in a circular orbit is given by:
+  $$ F_c = \frac{m v^2}{r} $$
 
-$$
-v = \frac{2 \pi r}{T}
-$$
+  where:
+  - \( v \) is the orbital velocity of the body.
 
-Substituting \( v \) and simplifying:
+Setting the gravitational force equal to the centripetal force:
 
-$$
-\frac{G M}{r} = \left( \frac{2 \pi r}{T} \right)^2
-$$
+$$ \frac{G M m}{r^2} = \frac{m v^2}{r} $$
 
-Rearranging:
+Canceling \( m \) from both sides and solving for \( v^2 \):
 
-$$
-T^2 = \frac{4 \pi^2}{G M} r^3
-$$
+$$ v^2 = \frac{G M}{r} $$
 
-which shows that \( T^2 \propto r^3 \), confirming Kepler’s Third Law.
+Now, the orbital period \( T \), which is the time it takes for the body to complete one full orbit, is related to the orbital velocity by:
 
-### Implementation
-A Python script can be used to verify this relationship by simulating circular orbits and plotting \( T^2 \) vs. \( r^3 \).
+$$ T = \frac{2\pi r}{v} $$
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
+Substitute the expression for \( v \):
 
-def orbital_period(radius, M, G=6.674e-11):
-    return 2 * np.pi * np.sqrt(radius**3 / (G * M))
+$$ T = \frac{2\pi r}{\sqrt{\frac{G M}{r}}} $$
+
+Simplifying the equation:
+
+$$ T = 2\pi \sqrt{\frac{r^3}{G M}} $$
+
+Squaring both sides to eliminate the square root:
+
+$$ T^2 = \frac{4\pi^2 r^3}{G M} $$
+
+This final equation confirms the fundamental relationship:
+
+$$ T^2 \propto r^3 $$
+
+This result means that if you plot \( T^2 \) versus \( r^3 \) for any orbiting object, the graph will produce a straight line, and the proportionality constant depends on the mass of the central body.
 
 # Parameters
 M = 5.972e24  # Mass of Earth (kg)

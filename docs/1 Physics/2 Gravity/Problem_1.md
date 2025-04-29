@@ -55,6 +55,9 @@ $$ T^2 \propto r^3 $$
 
 This result means that if you plot \( T^2 \) versus \( r^3 \) for any orbiting object, the graph will produce a straight line, and the proportionality constant depends on the mass of the central body.
 
+### Implementation
+A Python script can be used to verify this relationship by simulating circular orbits and plotting \( T^2 \) vs. \( r^3 \).
+```python
 # Parameters
 M = 5.972e24  # Mass of Earth (kg)
 radii = np.linspace(1e7, 5e7, 100)  # Orbital radii in meters
@@ -74,10 +77,7 @@ plt.legend()
 plt.grid()
 plt.show()
 
-### Implementation
-A Python script can be used to verify this relationship by simulating circular orbits and plotting \( T^2 \) vs. \( r^3 \).
 
-python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -102,7 +102,6 @@ plt.title("Verification of Kepler's Third Law")
 plt.legend()
 plt.grid()
 plt.show()
-
 ```
 *Graphical verification of Kepler's Third Law*
 

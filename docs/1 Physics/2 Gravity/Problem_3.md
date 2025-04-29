@@ -4,24 +4,8 @@
 ## Motivation:
 When an object is released from a moving rocket near Earth, its trajectory is determined by its initial conditions (position, velocity, and altitude) and the gravitational forces acting on it. The study of these trajectories is crucial for various space mission scenarios such as deploying payloads, orbital insertion, reentry, and escape.
 
-## Task:
-1. **Analyze Possible Trajectories:**
-   - Investigate the potential types of trajectories, including parabolic, hyperbolic, and elliptical orbits, based on the initial conditions of the payload (position, velocity, altitude).
-   - Understand how these trajectories relate to real-world space scenarios such as orbital insertion, reentry, or escape from Earth's gravity.
 
-2. **Numerical Analysis:**
-   - Use numerical methods to compute and simulate the path of the payload.
-   - Account for Earth's gravitational force on the payload, and determine how the velocity and position evolve over time.
-
-3. **Simulation and Visualization:**
-   - Develop a Python-based computational tool to simulate and visualize the motion of the payload under the influence of Earth's gravity.
-   - The tool should take initial velocity, position, and direction as input and simulate the payload's trajectory.
-   
-4. **Discuss Real-World Applications:**
-   - Explore how these trajectories are relevant to space mission planning, satellite deployment, and planetary exploration.
-   - Provide insights on how to predict payload trajectories for various mission scenarios.
-
-## Theory:
+## Mathematical Derivation:
 
 ### Gravitational Principles:
 - **Newton’s Law of Gravitation:**  
@@ -35,6 +19,13 @@ $$
   - \( G \) is the gravitational constant (\( 6.674 \times 10^{-11} \, \text{N} \cdot \text{m}^2 / \text{kg}^2 \)),
   - \( M_e \) is Earth's mass (\( 5.972 \times 10^{24} \, \text{kg} \)),
   - \( r \) is the distance from the center of the Earth.
+  
+The equations of motion are derived from Newton's second law:
+$$
+  F = ma
+$$
+
+where `a` is the acceleration of the payload. Using the gravitational force, we can model the acceleration of the payload. Depending on the initial conditions (position and velocity), the trajectory can take different forms.
 
 - **Kepler's Laws:**  
   These laws describe the motion of planets (and payloads in orbit) under the influence of gravity:

@@ -172,6 +172,186 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="measuring-earths-gravitational-acceleration-with-a-pendulum">Measuring Earth's Gravitational Acceleration with a Pendulum</h1>
+<hr/>
+<h3 id="motivation">Motivation</h3>
+<p>The gravitational acceleration <span class="arithmatex">\( g \)</span> is a fundamental physical constant. One of the classic and accessible methods to estimate it involves analyzing the oscillation of a simple pendulum. The period of a pendulum depends on its length and the gravitational field, making it an ideal experiment to explore measurement accuracy and uncertainty propagation.</p>
+<hr/>
+<h3 id="procedure">Procedure</h3>
+<h4 id="1-materials">1. Materials</h4>
+<p>•⁠  ⁠String: 1.00 m (±0.005 m)
+•⁠  ⁠Weight: Key chain
+•⁠  ⁠Stopwatch or smartphone timer (±0.01 s)
+•⁠  ⁠Ruler or measuring tape (±0.005 m)</p>
+<h4 id="2-setup">2. Setup</h4>
+<p>•⁠  ⁠Suspend the weight using the string from a stable point.
+•⁠  ⁠Measure the length <span class="arithmatex">\( L \)</span> from the suspension point to the center of the mass.
+  - Example: <span class="arithmatex">\( L = 1.000 \, \text{m} \)</span>
+  - Uncertainty: <span class="arithmatex">\( \Delta L = \pm 0.005 \, \text{m} \)</span></p>
+<h4 id="3-data-collection">3. Data Collection</h4>
+<p>•⁠  ⁠Displace pendulum slightly (&lt;15°).
+•⁠  ⁠Measure the time for 10 full oscillations (<span class="arithmatex">\( T_{10} \)</span>), repeat 10 times.</p>
+<table>
+<thead>
+<tr>
+<th>Trial</th>
+<th>Time for 10 Oscillations <span class="arithmatex">\( T_{10} \)</span> (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20.05</td>
+</tr>
+<tr>
+<td>2</td>
+<td>19.98</td>
+</tr>
+<tr>
+<td>3</td>
+<td>20.10</td>
+</tr>
+<tr>
+<td>4</td>
+<td>20.01</td>
+</tr>
+<tr>
+<td>5</td>
+<td>19.97</td>
+</tr>
+<tr>
+<td>6</td>
+<td>20.08</td>
+</tr>
+<tr>
+<td>7</td>
+<td>20.03</td>
+</tr>
+<tr>
+<td>8</td>
+<td>20.00</td>
+</tr>
+<tr>
+<td>9</td>
+<td>20.06</td>
+</tr>
+<tr>
+<td>10</td>
+<td>20.02</td>
+</tr>
+</tbody>
+</table>
+<p>•⁠  ⁠Mean of <span class="arithmatex">\( T_{10} \)</span>:<br/>
+  [
+  \bar{T}<em>{10} = 20.03 \, \text{s}
+  ]
+•⁠  ⁠Standard deviation:
+  [
+  \sigma = 0.041 \, \text{s}
+  ]
+•⁠  ⁠Mean period <span class="arithmatex">\( T \)</span>:<br/>
+  [
+  T = \frac{\bar{T}</em>{10}}{10} = 2.003 \, \text{s}
+  ]
+•⁠  ⁠Uncertainty in the mean period:
+  [
+  \Delta T = \frac{\sigma}{10} = 0.0041 \, \text{s}
+  ]</p>
+<hr/>
+<h3 id="calculations">Calculations</h3>
+<h4 id="1-gravitational-acceleration-formula">1. Gravitational acceleration formula:</h4>
+<div class="arithmatex">\[
+g = \frac{4\pi^2 L}{T^2}
+\]</div>
+<p>Substituting:</p>
+<div class="arithmatex">\[
+g = \frac{4\pi^2 \times 1.000}{(2.003)^2} \approx 9.85 \, \text{m/s}^2
+\]</div>
+<h4 id="2-propagation-of-uncertainty">2. Propagation of Uncertainty</h4>
+<div class="arithmatex">\[
+\left( \frac{\Delta g}{g} \right)^2 = \left( \frac{\Delta L}{L} \right)^2 + \left( 2 \cdot \frac{\Delta T}{T} \right)^2
+\]</div>
+<div class="arithmatex">\[
+\Delta g = g \cdot \sqrt{\left( \frac{0.005}{1.000} \right)^2 + \left( 2 \cdot \frac{0.0041}{2.003} \right)^2} \approx 0.06 \, \text{m/s}^2
+\]</div>
+<div class="arithmatex">\[
+g = 9.85 \pm 0.06 \, \text{m/s}^2
+\]</div>
+<hr/>
+<h1 id="python-script-for-distribution-of-measured-pendulum-periods">Python Script for Distribution of Measured Pendulum Periods</h1>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Sample data: 10 measurements of time for 10 oscillations (seconds)
+T10_values = np.array([20.05, 19.98, 20.10, 20.01, 19.97, 20.08, 20.03, 20.00, 20.06, 20.02])
+L = 1.000  # Length in meters
+dL = 0.005  # Uncertainty in length (m)
+T_values = T10_values / 10  # Periods (T) for each measurement
+
+# Calculate mean and standard deviation
+T_mean = np.mean(T_values)
+T_std = np.std(T_values, ddof=1)
+dT = T_std / np.sqrt(len(T_values))
+
+# Calculate g
+g = (4 * np.pi*2 * L) / (T_mean*2)
+
+# Uncertainty in g using propagation of errors
+dg = g * np.sqrt((dL / L)*2 + (2 * dT / T_mean)*2)
+
+print(f"Mean Period (T): {T_mean:.4f} ± {dT:.4f} s")
+print(f"Estimated g: {g:.2f} ± {dg:.2f} m/s²")
+
+# Visualization
+plt.figure(figsize=(10, 6))
+plt.hist(T_values, bins=5, color='skyblue', edgecolor='black')
+plt.axvline(T_mean, color='red', linestyle='--', label=f"Mean T = {T_mean:.4f} s")
+plt.title("Distribution of Measured Pendulum Periods")
+plt.xlabel("Period (s)")
+plt.ylabel("Frequency")
+plt.legend()
+plt.grid(True)
+plt.show()
+</code></pre>
+<h2 id="visualization-output">Visualization Output:</h2>
+<p><img alt="Distribution of Measured Pendulum Periods" src="../../../_pics/Measurements.jpeg"/></p>
+<h3 id="results">Results</h3>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pendulum Length <span class="arithmatex">\( L \)</span></td>
+<td>1.000 ± 0.005 m</td>
+</tr>
+<tr>
+<td>Mean Period <span class="arithmatex">\( T \)</span></td>
+<td>2.003 ± 0.0041 s</td>
+</tr>
+<tr>
+<td>Estimated <span class="arithmatex">\( g \)</span></td>
+<td>9.85 ± 0.06 m/s²</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h3 id="analysis-discussion">Analysis &amp; Discussion</h3>
+<h4 id="comparison-with-standard-value">Comparison with Standard Value</h4>
+<p>•⁠  ⁠Standard gravitational acceleration: <span class="arithmatex">\( 9.80665 \, \text{m/s}^2 \)</span>
+•⁠  ⁠Our value: <span class="arithmatex">\( 9.85 \, \text{m/s}^2 \)</span>, which is within acceptable range considering experimental uncertainties.</p>
+<h4 id="sources-of-uncertainty">Sources of Uncertainty</h4>
+<p>•⁠  ⁠<em>Length Measurement</em>: Any small error in identifying the pivot or center of mass can significantly affect <span class="arithmatex">\( g \)</span>.
+•⁠  ⁠<em>Timing</em>: Human reaction time affects stopwatch usage. Averaging over 10 periods reduces this impact.
+•⁠  ⁠<em>Small-angle Assumption</em>: If the angle exceeds 15°, the approximation <span class="arithmatex">\( \sin\theta \approx \theta \)</span> becomes invalid.
+•⁠  ⁠<em>Air Resistance &amp; Friction</em>: Neglected in theory but present in reality.</p>
+<h4 id="conclusions">Conclusions</h4>
+<p>•⁠  ⁠The pendulum is a reliable tool for measuring <span class="arithmatex">\( g \)</span> when careful attention is paid to length and time measurements.
+•⁠  ⁠Propagated uncertainties provide a meaningful range for <span class="arithmatex">\( g \)</span>, supporting the robustness of the result.</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

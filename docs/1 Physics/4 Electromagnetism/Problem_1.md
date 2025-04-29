@@ -68,41 +68,44 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 # Constants
-q = 1.6e-19  # Charge (C, e.g., proton)
-m = 1.67e-27 # Mass (kg, e.g., proton)
-dt = 1e-7    # Time step (s)
-steps = 10000 # Number of steps
+q = 1.6e-19  # Charge (C)
+m = 1.67e-27 # Mass (kg)
+dt = 1e-10   # Smaller time step for better accuracy
+steps = 10000
 
-def lorentz_force(v, E, B):
-    """Compute acceleration due to Lorentz force."""
-    return (q / m) * (E + np.cross(v, B))
+def boris_push(v, E, B):
+    """Velocity update using the Boris algorithm"""
+    t = (q * B / m) * (dt / 2)
+    s = 2 * t / (1 + np.dot(t, t))
+    v_minus = v + (q * E / m) * (dt / 2)
+    v_prime = v_minus + np.cross(v_minus, t)
+    v_plus = v_minus + np.cross(v_prime, s)
+    return v_plus + (q * E / m) * (dt / 2)
 
-def simulate_trajectory(E, B, v0, t_max=steps*dt):
-    """Simulate particle trajectory using Euler method."""
+def simulate_trajectory_boris(E, B, v0, t_max=steps*dt):
     positions = [np.array([0.0, 0.0, 0.0])]
     velocities = [v0]
     t = 0
     while t < t_max:
         v = velocities[-1]
-        a = lorentz_force(v, E, B)
-        v_new = v + a * dt
+        v_new = boris_push(v, E, B)
         r_new = positions[-1] + v_new * dt
         velocities.append(v_new)
         positions.append(r_new)
         t += dt
     return np.array(positions), np.array(velocities)
 
-# Field Configurations
+# Fields
 B_uniform = np.array([0, 0, 0.1])      # Uniform B along z (Tesla)
 E_zero = np.array([0, 0, 0])           # No E field
 E_uniform = np.array([1e5, 0, 0])      # Uniform E along x (N/C)
 E_crossed = np.array([1e5, 0, 0])      # E perpendicular to B
-v0 = np.array([1e3, 0, 1e2])          # Initial velocity (m/s)
+v0 = np.array([1e5, 0, 0])            # Higher initial velocity for visible circle
 
 # Simulations
-pos_B, vel_B = simulate_trajectory(E_zero, B_uniform, v0)          # Uniform B
-pos_EB, vel_EB = simulate_trajectory(E_uniform, B_uniform, v0)    # Combined E and B
-pos_crossed, vel_crossed = simulate_trajectory(E_crossed, B_uniform, v0)  # Crossed fields
+pos_B, vel_B = simulate_trajectory_boris(E_zero, B_uniform, v0)
+pos_EB, vel_EB = simulate_trajectory_boris(E_uniform, B_uniform, v0)
+pos_crossed, vel_crossed = simulate_trajectory_boris(E_crossed, B_uniform, v0)
 
 # Visualization
 fig = plt.figure(figsize=(15, 5))
@@ -134,27 +137,10 @@ ax3.set_xlabel("x (m)")
 ax3.set_ylabel("y (m)")
 ax3.legend()
 ax3.grid(True)
+ax3.axis("equal")
 
 plt.tight_layout()
 plt.show()
-
-# Parameter Exploration
-def explore_parameters():
-    # Vary initial velocity
-    v0_fast = np.array([2e3, 0, 1e2])
-    pos_fast, _ = simulate_trajectory(E_zero, B_uniform, v0_fast)
-    plt.figure()
-    plt.plot(pos_B[:, 0], pos_B[:, 1], label="v0 = 1e3 m/s")
-    plt.plot(pos_fast[:, 0], pos_fast[:, 1], label="v0 = 2e3 m/s")
-    plt.title("Effect of Initial Velocity (Uniform B)")
-    plt.xlabel("x (m)")
-    plt.ylabel("y (m)")
-    plt.legend()
-    plt.grid(True)
-    plt.axis("equal")
-    plt.show()
-
-explore_parameters()
 ```
 
 # Visualizations
@@ -163,27 +149,22 @@ explore_parameters()
 - **Trajectory:** Circular motion in the xy-plane due to \( \mathbf{B} \) along z.
 - **Larmor Radius:** \( r_L = \frac{m v_\perp}{|q| B} \approx 0.0104 \, \text{m} \) (with \( v_\perp = 1e3 \, \text{m/s} \), \( B = 0.1 \, \text{T} \)).
 - **Plot:** Circular path in 2D.
-![Graphical Representation: Uniform Magnetic Field](../../_pics/UniformMagnetic2D.png)
+![Graphical Representation: Uniform Magnetic Field](../../_pics/Electromagnetism1.png)
 - **Explanation:** CA 2D plot in the xy-plane showing circular motion.
 
 ## 2. Combined Electric and Magnetic Fields
 - **Trajectory:** Helical motion with drift along x due to \( \mathbf{E} \) in the x-direction.
 - **Phenomena:** Combines circular motion (from \( \mathbf{B} \)) and acceleration (from \( \mathbf{E} \)).
 - **Plot:** 3D helix with x-drift.
-![Graphical Representation: Combined Electric and Magnetic Fields](../../_pics/Combined3D.png)
+![Graphical Representation: Combined Electric and Magnetic Fields](../../_pics/Electromagnetism2.png)
 - **Explanation:** A 3D plot showing helical motion with drift.
 
 ## 3. Crossed Electric and Magnetic Fields
 - **Trajectory:** Cycloidal motion with drift in the y-direction (perpendicular to \( \mathbf{E} \) and \( \mathbf{B} \)).
 - **Drift Velocity:** \( v_d = \frac{E}{B} = \frac{1e5}{0.1} = 1e6 \, \text{m/s} \).
 - **Plot:** 2D xy-plane shows drift and oscillation.
-![Graphical Representation: Crossed Electric and Magnetic Fields](../../_pics/Crossed2D.png)
+![Graphical Representation: Crossed Electric and Magnetic Fields](../../_pics/Electromagnetism3.png)
 - **Explanation:** A 2D plot in the xy-plane showing cycloidal motion with drift.
-
-## Parameter Exploration
-- **Initial Velocity:** Doubling \( v_\perp \) from 1e3 to 2e3 m/s doubles the Larmor radius, expanding the circular path (see second plot).
-![Graphical Representation: Parameter Exploration](../../_pics/Exploration2D.png)
-- **Explanation:** A 2D plot comparing trajectories for two different initial velocities in a uniform magnetic field.
 
 
 # Discussions

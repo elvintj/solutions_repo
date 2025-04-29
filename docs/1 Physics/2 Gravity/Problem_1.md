@@ -102,6 +102,7 @@ plt.title("Verification of Kepler's Third Law")
 plt.legend()
 plt.grid()
 plt.show()
+
 ```
 *Graphical verification of Kepler's Third Law*
 

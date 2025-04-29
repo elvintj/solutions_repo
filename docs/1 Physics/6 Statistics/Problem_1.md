@@ -22,7 +22,7 @@ For each distribution, we performed the following steps:
 4.⁠ ⁠Plotted histograms of these sample means to observe the sampling distribution.
 
 ## Python Script for Simulation (Uniform Distribution Example)
-``` python
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns

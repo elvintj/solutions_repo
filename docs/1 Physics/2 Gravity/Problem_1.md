@@ -73,3 +73,37 @@ plt.title("Verification of Kepler's Third Law")
 plt.legend()
 plt.grid()
 plt.show()
+
+### Implementation
+A Python script can be used to verify this relationship by simulating circular orbits and plotting \( T^2 \) vs. \( r^3 \).
+
+python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def orbital_period(radius, M, G=6.674e-11):
+    return 2 * np.pi * np.sqrt(radius**3 / (G * M))
+
+# Parameters
+M = 5.972e24  # Mass of Earth (kg)
+radii = np.linspace(1e7, 5e7, 100)  # Orbital radii in meters
+T_values = orbital_period(radii, M)
+
+# Squaring period and cubing radius
+T_squared = T_values**2
+r_cubed = radii**3
+
+# Plot results
+plt.figure(figsize=(8, 5))
+plt.plot(r_cubed, T_squared, label='T^2 vs r^3')
+plt.xlabel("Orbital Radius Cubed (m³)")
+plt.ylabel("Orbital Period Squared (s²)")
+plt.title("Verification of Kepler's Third Law")
+plt.legend()
+plt.grid()
+plt.show()
+
+```
+*Graphical verification of Kepler's Third Law*
+
+![Kepler's Third Law](../../_pics/Graph3.png)

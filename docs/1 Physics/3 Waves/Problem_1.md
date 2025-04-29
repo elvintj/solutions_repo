@@ -426,3 +426,109 @@ When you run the script, you’ll see a heatmap showing the interference pattern
 - Near the sources, the waves are strong (large displacement) because of the \(1/\sqrt{r}\) term.
 - Along the lines connecting pairs of sources (e.g., from \((R, 0)\) to \(\left(-\frac{R}{2}, R \frac{\sqrt{3}}{2}\right)\)), you’ll see alternating regions of constructive and destructive interference due to the changing path difference.
 - At the center \((0, 0)\), the distances from all three sources are equal (\(r = R = \frac{2}{\sqrt{3}}\)), so the waves arrive with the same phase, leading to constructive interference.
+
+
+# Variant C - Animated Wave Evolution for Interference Patterns (Equilateral Triangle)
+
+## Problem Recap
+
+We are analyzing the interference patterns formed on a water surface due to the superposition of circular waves emitted from three point sources placed at the vertices of an equilateral triangle. The wave equation for a single source is:
+
+\[
+\eta(x, y, t) = \frac{A}{\sqrt{r}} \cdot \cos(kr - \omega t + \phi)
+\]
+
+where:
+
+- \(\eta(x, y, t)\) is the displacement of the water surface at point \((x, y)\) and time \(t\),
+- \(A\) is the amplitude,
+- \(k = \frac{2\pi}{\lambda}\) is the wave number (\(\lambda\) is the wavelength),
+- \(\omega = 2\pi f\) is the angular frequency (\(f\) is the frequency),
+- \(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\) is the distance from the source at \((x_0, y_0)\),
+- \(\phi\) is the initial phase (set to 0 for simplicity).
+
+The sources are at the vertices of an equilateral triangle with side length \(s = 2\), centered at the origin:
+
+- Source 1: \(\left(\frac{2}{\sqrt{3}}, 0\right) \approx (1.1547, 0)\),
+- Source 2: \(\left(-\frac{1}{\sqrt{3}}, 1\right) \approx (-0.5774, 1)\),
+- Source 3: \(\left(-\frac{1}{\sqrt{3}}, -1\right) \approx (-0.5774, -1)\).
+
+The total displacement is the sum of the contributions from all sources:
+
+\[
+\eta(x, y, t) = \sum_{i=1}^{3} \frac{A}{\sqrt{r_i}} \cdot \cos(k r_i - \omega t)
+\]
+
+We’ll use the same parameters as before: \(A = 1\), \(\lambda = 1\), \(k = 2\pi\), \(f = 1\), \(\omega = 2\pi\).
+
+## Animated Wave Evolution Script
+
+Below is a Python script that generates an animated wave evolution using Matplotlib’s animation module. The animation will show how the interference pattern changes over time as the waves propagate.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+# Parameters
+A = 1.0  # Amplitude
+lambda_ = 1.0  # Wavelength
+k = 2 * np.pi / lambda_  # Wave number
+f = 1.0  # Frequency
+omega = 2 * np.pi * f  # Angular frequency
+
+# Define the positions of the sources (vertices of an equilateral triangle)
+R = 2 / np.sqrt(3)  # Circumradius of the triangle with side length 2
+sources = [
+    (R, 0),               # Source 1
+    (-R/2, R * np.sqrt(3)/2),  # Source 2
+    (-R/2, -R * np.sqrt(3)/2)  # Source 3
+]
+
+# Create a grid of points
+x = np.linspace(-5, 5, 100)  # x-range
+y = np.linspace(-5, 5, 100)  # y-range
+X, Y = np.meshgrid(x, y)
+
+# Set up the figure and axis
+fig, ax = plt.subplots(figsize=(8, 8))
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_title('Animated Wave Evolution (Equilateral Triangle Sources)')
+ax.grid(True)
+
+# Scatter plot for the sources
+ax.scatter([s[0] for s in sources], [s[1] for s in sources], c='black', marker='o', label='Sources')
+ax.legend()
+
+# Initial plot (to be updated in animation)
+contour = ax.contourf(X, Y, np.zeros_like(X), cmap='seismic', levels=50)
+cbar = fig.colorbar(contour, ax=ax, label='Displacement')
+
+# Animation update function
+def update(frame):
+    t = frame * 0.02  # Time step (adjust for animation speed)
+    eta = np.zeros_like(X)  # Reset displacement
+    # Sum the contributions from each source
+    for (x0, y0) in sources:
+        r = np.sqrt((X - x0)**2 + (Y - y0)**2)
+        r = np.where(r < 1e-6, 1e-6, r)  # Avoid division by zero
+        eta += (A / np.sqrt(r)) * np.cos(k * r - omega * t)
+    
+    # Update the contour plot
+    for coll in contour.collections:
+        coll.remove()
+    contour = ax.contourf(X, Y, eta, cmap='seismic', levels=50)
+    return contour.collections
+
+# Create the animation
+ani = animation.FuncAnimation(fig, update, frames=100, interval=50, blit=True)
+
+# Show the animation
+plt.show()
+```
+
+# Visualization of the script
+
+- **Plot:** Interference Pattern:
+![Graphical Representation: Interference Pattern from Four Sources (Square)](../../_pics/Waves02.png)

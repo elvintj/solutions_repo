@@ -8,26 +8,40 @@ Kepler's Third Law states that the square of the orbital period (T) of a planet 
 ### Theory
 For a body in a circular orbit around a massive central object, the gravitational force provides the necessary centripetal force:
 
-\[ F_g = F_c \]
+$$
+F_g = F_c
+$$
 
 Using Newton’s Law of Gravitation:
-\[ \frac{G M m}{r^2} = \frac{m v^2}{r} \]
+
+$$
+\frac{G M m}{r^2} = \frac{m v^2}{r}
+$$
 
 where:
-- \( G \) is the gravitational constant \( (6.674 \times 10^{-11} \text{ m}^3 \text{kg}^{-1} \text{s}^{-2}) \),
-- \( M \) is the mass of the central object,
-- \( m \) is the mass of the orbiting body,
-- \( r \) is the orbital radius,
-- \( v \) is the orbital velocity.
+•⁠  ⁠\( G \) is the gravitational constant \( (6.674 \times 10^{-11} \text{ m}^3 \text{kg}^{-1} \text{s}^{-2}) \),
+•⁠  ⁠\( M \) is the mass of the central object,
+•⁠  ⁠\( m \) is the mass of the orbiting body,
+•⁠  ⁠\( r \) is the orbital radius,
+•⁠  ⁠\( v \) is the orbital velocity.
 
 Since the velocity in a circular orbit is given by:
-\[ v = \frac{2 \pi r}{T} \]
+
+$$
+v = \frac{2 \pi r}{T}
+$$
 
 Substituting \( v \) and simplifying:
-\[ \frac{G M}{r} = \left( \frac{2 \pi r}{T} \right)^2 \]
+
+$$
+\frac{G M}{r} = \left( \frac{2 \pi r}{T} \right)^2
+$$
 
 Rearranging:
-\[ T^2 = \frac{4 \pi^2}{G M} r^3 \]
+
+$$
+T^2 = \frac{4 \pi^2}{G M} r^3
+$$
 
 which shows that \( T^2 \propto r^3 \), confirming Kepler’s Third Law.
 
@@ -59,8 +73,3 @@ plt.title("Verification of Kepler's Third Law")
 plt.legend()
 plt.grid()
 plt.show()
-```
-
-**Graphical verification of Kepler's Third Law**
-
-![Kepler's Third Law](../../_pics/Graph3.png)

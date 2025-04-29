@@ -25,7 +25,8 @@ $$
   F = ma
 $$
 
-where `a` is the acceleration of the payload. Using the gravitational force, we can model the acceleration of the payload. Depending on the initial conditions (position and velocity), the trajectory can take different forms.
+   Where:
+   - `a` is the acceleration of the payload. Using the gravitational force, we can model the acceleration of the payload. Depending on the initial conditions (position and velocity), the trajectory can take different forms.
 
 - **Kepler's Laws:**  
   These laws describe the motion of planets (and payloads in orbit) under the influence of gravity:

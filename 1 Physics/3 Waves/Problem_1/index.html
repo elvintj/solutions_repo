@@ -516,6 +516,100 @@ plt.show()
 <li>Along the lines connecting pairs of sources (e.g., from <span class="arithmatex">\((R, 0)\)</span> to <span class="arithmatex">\(\left(-\frac{R}{2}, R \frac{\sqrt{3}}{2}\right)\)</span>), you’ll see alternating regions of constructive and destructive interference due to the changing path difference.</li>
 <li>At the center <span class="arithmatex">\((0, 0)\)</span>, the distances from all three sources are equal (<span class="arithmatex">\(r = R = \frac{2}{\sqrt{3}}\)</span>), so the waves arrive with the same phase, leading to constructive interference.</li>
 </ul>
+<h1 id="variant-c-animated-wave-evolution-for-interference-patterns-equilateral-triangle">Variant C - Animated Wave Evolution for Interference Patterns (Equilateral Triangle)</h1>
+<h2 id="problem-recap">Problem Recap</h2>
+<p>We are analyzing the interference patterns formed on a water surface due to the superposition of circular waves emitted from three point sources placed at the vertices of an equilateral triangle. The wave equation for a single source is:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \frac{A}{\sqrt{r}} \cdot \cos(kr - \omega t + \phi)
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\eta(x, y, t)\)</span> is the displacement of the water surface at point <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>,</li>
+<li><span class="arithmatex">\(A\)</span> is the amplitude,</li>
+<li><span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> is the wave number (<span class="arithmatex">\(\lambda\)</span> is the wavelength),</li>
+<li><span class="arithmatex">\(\omega = 2\pi f\)</span> is the angular frequency (<span class="arithmatex">\(f\)</span> is the frequency),</li>
+<li><span class="arithmatex">\(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\)</span> is the distance from the source at <span class="arithmatex">\((x_0, y_0)\)</span>,</li>
+<li><span class="arithmatex">\(\phi\)</span> is the initial phase (set to 0 for simplicity).</li>
+</ul>
+<p>The sources are at the vertices of an equilateral triangle with side length <span class="arithmatex">\(s = 2\)</span>, centered at the origin:</p>
+<ul>
+<li>Source 1: <span class="arithmatex">\(\left(\frac{2}{\sqrt{3}}, 0\right) \approx (1.1547, 0)\)</span>,</li>
+<li>Source 2: <span class="arithmatex">\(\left(-\frac{1}{\sqrt{3}}, 1\right) \approx (-0.5774, 1)\)</span>,</li>
+<li>Source 3: <span class="arithmatex">\(\left(-\frac{1}{\sqrt{3}}, -1\right) \approx (-0.5774, -1)\)</span>.</li>
+</ul>
+<p>The total displacement is the sum of the contributions from all sources:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \sum_{i=1}^{3} \frac{A}{\sqrt{r_i}} \cdot \cos(k r_i - \omega t)
+\]</div>
+<p>We’ll use the same parameters as before: <span class="arithmatex">\(A = 1\)</span>, <span class="arithmatex">\(\lambda = 1\)</span>, <span class="arithmatex">\(k = 2\pi\)</span>, <span class="arithmatex">\(f = 1\)</span>, <span class="arithmatex">\(\omega = 2\pi\)</span>.</p>
+<h2 id="animated-wave-evolution-script">Animated Wave Evolution Script</h2>
+<p>Below is a Python script that generates an animated wave evolution using Matplotlib’s animation module. The animation will show how the interference pattern changes over time as the waves propagate.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+# Parameters
+A = 1.0  # Amplitude
+lambda_ = 1.0  # Wavelength
+k = 2 * np.pi / lambda_  # Wave number
+f = 1.0  # Frequency
+omega = 2 * np.pi * f  # Angular frequency
+
+# Define the positions of the sources (vertices of an equilateral triangle)
+R = 2 / np.sqrt(3)  # Circumradius of the triangle with side length 2
+sources = [
+    (R, 0),               # Source 1
+    (-R/2, R * np.sqrt(3)/2),  # Source 2
+    (-R/2, -R * np.sqrt(3)/2)  # Source 3
+]
+
+# Create a grid of points
+x = np.linspace(-5, 5, 100)  # x-range
+y = np.linspace(-5, 5, 100)  # y-range
+X, Y = np.meshgrid(x, y)
+
+# Set up the figure and axis
+fig, ax = plt.subplots(figsize=(8, 8))
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_title('Animated Wave Evolution (Equilateral Triangle Sources)')
+ax.grid(True)
+
+# Scatter plot for the sources
+ax.scatter([s[0] for s in sources], [s[1] for s in sources], c='black', marker='o', label='Sources')
+ax.legend()
+
+# Initial plot (to be updated in animation)
+contour = ax.contourf(X, Y, np.zeros_like(X), cmap='seismic', levels=50)
+cbar = fig.colorbar(contour, ax=ax, label='Displacement')
+
+# Animation update function
+def update(frame):
+    t = frame * 0.02  # Time step (adjust for animation speed)
+    eta = np.zeros_like(X)  # Reset displacement
+    # Sum the contributions from each source
+    for (x0, y0) in sources:
+        r = np.sqrt((X - x0)**2 + (Y - y0)**2)
+        r = np.where(r &lt; 1e-6, 1e-6, r)  # Avoid division by zero
+        eta += (A / np.sqrt(r)) * np.cos(k * r - omega * t)
+
+    # Update the contour plot
+    for coll in contour.collections:
+        coll.remove()
+    contour = ax.contourf(X, Y, eta, cmap='seismic', levels=50)
+    return contour.collections
+
+# Create the animation
+ani = animation.FuncAnimation(fig, update, frames=100, interval=50, blit=True)
+
+# Show the animation
+plt.show()
+</code></pre>
+<h1 id="visualization-of-the-script_2">Visualization of the script</h1>
+<ul>
+<li><strong>Plot:</strong> Interference Pattern:
+<img alt="Graphical Representation: Interference Pattern from Four Sources (Square)" src="../../../_pics/Waves02.png"/></li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

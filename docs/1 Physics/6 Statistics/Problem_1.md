@@ -44,11 +44,12 @@ for i, size in enumerate(sample_sizes, 1):
 plt.tight_layout()
 plt.suptitle('Sampling Distribution of Sample Mean - Uniform(0, 1)', fontsize=16, y=1.02)
 plt.show()
-
- ⁠
+```
 
 ### Visual Output of Python script 
+**Visual Representation**
 
+![Sampling Distribution](../../_pics/Statistics_task1.png)
 
 
 ## Parameter Exploration
@@ -84,8 +85,3 @@ Through simulations with Uniform, Exponential, and Binomial distributions:
 •⁠  ⁠The rate of convergence is influenced by the original distribution's shape and variance.
 
 This reinforces the CLT’s importance in both theoretical and practical applications of statistics.
-```
-
-**Visual Representation**
-
-![Sampling Distribution](../../_pics/Statistics_task1.png)

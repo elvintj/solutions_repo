@@ -26,10 +26,9 @@ When an object is released from a moving rocket near Earth, its trajectory is de
 ### Gravitational Principles:
 - **Newton’s Law of Gravitation:**  
   The gravitational force acting on an object with mass `m` near Earth is given by:
-
-  \[
+$$
   F = \frac{G M_e m}{r^2}
-  \]
+$$
 
   Where:
   - \( F \) is the gravitational force,
@@ -51,12 +50,12 @@ When an object is released from a moving rocket near Earth, its trajectory is de
 ### Escape Velocity:
 The escape velocity \( v_e \) is the minimum velocity needed for an object to escape Earth's gravitational influence, calculated as:
 
-\[
+$$
 v_e = \sqrt{\frac{2 G M_e}{r}}
-\]
+$$
 
 Where:
-- \( v_e \) is the escape velocity,
+-  \( v_e \) is the escape velocity,
 - \( r \) is the distance from the center of the Earth.
 
 ## Python Code: Numerical Simulation

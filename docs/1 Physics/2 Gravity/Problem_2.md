@@ -7,51 +7,59 @@ The concept of escape velocity is essential for understanding the conditions nec
 
 ### Theory
 
-1. **First Cosmic Velocity**:  
+1.⁠ ⁠*First Cosmic Velocity*:  
    The first cosmic velocity is the minimum speed needed for an object to enter a stable orbit around a celestial body. This velocity depends on the mass of the body and the radius of the orbit. The formula is derived from the balance between gravitational force and centripetal force for a circular orbit:
-   \[
+
+   $$
    v_1 = \sqrt{\frac{GM}{R}}
-   \]
+   $$
+
    where:
    - \( G \) is the gravitational constant,
    - \( M \) is the mass of the celestial body,
    - \( R \) is the radius of the orbit.
 
-2. **Second Cosmic Velocity**:  
+2.⁠ ⁠*Second Cosmic Velocity*:  
    The second cosmic velocity is the escape velocity, the speed required to escape the gravitational influence of a celestial body. It is derived by equating kinetic and potential energy:
-   \[
+
+   $$
    v_2 = \sqrt{\frac{2GM}{R}}
-   \]
+   $$
+
    where:
    - \( G \), \( M \), and \( R \) have the same definitions as in the first cosmic velocity.
 
-3. **Third Cosmic Velocity**:  
+3.⁠ ⁠*Third Cosmic Velocity*:  
    The third cosmic velocity is the speed required for an object to escape the gravitational pull of a star system. It takes into account the gravitational influences of both the planet and the star:
-   \[
+
+   $$
    v_3 = \sqrt{\frac{2GM_{\text{star}}}{R_{\text{star}}} + \frac{2GM_{\text{planet}}}{R_{\text{planet}}}}
-   \]
+   $$
 
 ### Mathematical Derivations
-- The escape velocity is derived from energy conservation principles. The total mechanical energy at the surface of the celestial body (kinetic plus potential energy) must equal zero for the object to escape:
-  \[
+•⁠  ⁠The escape velocity is derived from energy conservation principles. The total mechanical energy at the surface of the celestial body (kinetic plus potential energy) must equal zero for the object to escape:
+
+  $$
   \frac{1}{2}mv^2 = \frac{GMm}{R}
-  \]
+  $$
+
   This simplifies to the formula for escape velocity:
-  \[
+
+  $$
   v_2 = \sqrt{\frac{2GM}{R}}
-  \]
+  $$
 
 ### Calculations for Different Celestial Bodies
 
 #### Constants:
-- **Gravitational constant** (\( G \)) = \( 6.67430 \times 10^{-11} \, \text{m}^3 \, \text{kg}^{-1} \, \text{s}^{-2} \)
-- **Earth**:
+•⁠  ⁠*Gravitational constant* (\( G \)) = \( 6.67430 \times 10^{-11} \, \text{m}^3 \, \text{kg}^{-1} \, \text{s}^{-2} \)
+•⁠  ⁠*Earth*:
   - Mass (\( M_{\text{Earth}} \)) = \( 5.972 \times 10^{24} \, \text{kg} \)
   - Radius (\( R_{\text{Earth}} \)) = \( 6.371 \times 10^6 \, \text{m} \)
-- **Mars**:
+•⁠  ⁠*Mars*:
   - Mass (\( M_{\text{Mars}} \)) = \( 0.64171 \times 10^{24} \, \text{kg} \)
   - Radius (\( R_{\text{Mars}} \)) = \( 3.396 \times 10^6 \, \text{m} \)
-- **Jupiter**:
+•⁠  ⁠*Jupiter*:
   - Mass (\( M_{\text{Jupiter}} \)) = \( 1.898 \times 10^{27} \, \text{kg} \)
   - Radius (\( R_{\text{Jupiter}} \)) = \( 6.991 \times 10^7 \, \text{m} \)
 

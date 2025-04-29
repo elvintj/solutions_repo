@@ -57,6 +57,7 @@ This result means that if you plot \( T^2 \) versus \( r^3 \) for any orbiting o
 
 ### Implementation
 A Python script can be used to verify this relationship by simulating circular orbits and plotting \( T^2 \) vs. \( r^3 \).
+
 ```python
 # Parameters
 M = 5.972e24  # Mass of Earth (kg)
@@ -102,8 +103,7 @@ plt.title("Verification of Kepler's Third Law")
 plt.legend()
 plt.grid()
 plt.show()
-
 ```
-*Graphical verification of Kepler's Third Law*
+**Graphical verification of Kepler's Third Law**
 
 ![Kepler's Third Law](../../_pics/Graph3.png)
